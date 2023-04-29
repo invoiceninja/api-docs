@@ -8073,7 +8073,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -8105,7 +8109,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/projects/{id}":
@@ -8146,7 +8154,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -8186,7 +8198,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -8222,7 +8238,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/projects/{id}/edit":
@@ -8263,7 +8283,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/projects/create:
@@ -8296,7 +8320,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/projects/bulk:
@@ -8340,7 +8368,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/projects/{id}/upload":
@@ -8381,7 +8413,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/clients:
@@ -8511,13 +8547,19 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
     post:
       tags:
         - clients
       summary: 'Create client'
-      description: 'Adds a client to a company'
+      description: |
+            Adds a client to a company
+              
+            When creating (or updating) a client you must include the child contacts with all mutating requests. Client contacts cannot be modified in isolation.
+
       operationId: storeClient
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -8550,6 +8592,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   '/api/v1/clients/{id}':
@@ -8591,6 +8635,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
     put:
@@ -8611,6 +8657,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Client object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientRequest'
       responses:
         200:
           description: 'Returns the client object'
@@ -8631,6 +8684,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
     delete:
@@ -8667,6 +8722,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   '/api/v1/clients/{id}/edit':
@@ -8674,7 +8731,7 @@ paths:
       tags:
         - clients
       summary: 'Edit Client'
-      description: 'Displays a client by id'
+      description: 'Displays a client by id, essentially an alias of the show route'
       operationId: editClient
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -8708,6 +8765,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   /api/v1/clients/create:
@@ -8741,6 +8800,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   /api/v1/clients/bulk:
@@ -8755,19 +8816,16 @@ paths:
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/index'
       requestBody:
-        description: 'User credentials'
+        description: 'Bulk action array'
         required: true
         content:
           application/json:
             schema:
-              type: array
-              items:
-                description: 'Array of hashed IDs to be bulk ''actioned'
-                type: integer
-                example: '[0,1,2,3]'
+              $ref: '#/components/schemas/GenericBulkAction'
+              
       responses:
         200:
-          description: 'The Client User response'
+          description: 'The Client listresponse'
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
@@ -8785,6 +8843,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   '/api/v1/clients/{id}/upload':
@@ -8840,6 +8900,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   '/api/v1/clients/{id}/purge':
@@ -8847,11 +8909,17 @@ paths:
       tags:
         - clients
       summary: 'Purge client'
-      description: 'Handles purging a client'
+      description: |
+            Handles purging a clients.
+
+            Please note this is a destructive action.
+
+            This action will remove all data associated with the client and cannot be undone.
       operationId: purgeClient
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/X-API-PASSWORD'
         - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
@@ -8877,6 +8945,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   '/api/v1/clients/{id}/{mergeable_client_hashed_id}/merge':
@@ -8884,12 +8954,18 @@ paths:
       tags:
         - clients
       summary: 'Merge client'
-      description: 'Handles merging 2 clients'
+      description: |
+            Handles merging 2 clients
+
+            The id parameter is the client that will be the primary client after the merge has completed. 
+
+            The mergeable_client_hashed_id is the client that will be merged into the primary client, this clients records will be updated and associated with the primary client.
       operationId: mergeClient
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/client_include'
+        - $ref: '#/components/parameters/X-API-PASSWORD'
         - name: id
           in: path
           description: 'The Client Hashed ID'
@@ -8922,6 +8998,8 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
   /api/v1/client_statement:
@@ -8936,7 +9014,7 @@ paths:
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/include'
       requestBody:
-        description: 'Statment Options'
+        description: 'Statement Options'
         required: true
         content:
           application/json:
@@ -8953,6 +9031,9 @@ paths:
                   type: string
                 show_payments_table:
                   description: 'Flag which determines if the payments table is shown'
+                  type: boolean
+                show_credits_table:
+                  description: 'Flag which determines if the credits table is shown'
                   type: boolean
                 show_aging_table:
                   description: 'Flag which determines if the aging table is shown'
@@ -8978,6 +9059,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
   /api/v1/quotes:
@@ -9059,7 +9144,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -9091,7 +9180,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/quotes/{id}":
@@ -9132,7 +9225,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -9172,7 +9269,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -9208,7 +9309,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/quotes/{id}/edit":
@@ -9249,7 +9354,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/quotes/create:
@@ -9282,7 +9391,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/quotes/bulk:
@@ -9326,7 +9439,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/quotes/{id}/{action}":
@@ -9376,7 +9493,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/quote/{invitation_key}/download":
@@ -9413,7 +9534,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/quotes/{id}/upload":
@@ -9454,7 +9579,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/products:
@@ -9519,6 +9648,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
     post:
@@ -9531,6 +9664,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Product object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
       responses:
         200:
           description: "Returns the saved product object"
@@ -9551,6 +9691,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
   "/api/v1/products/{id}":
@@ -9592,6 +9736,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
     put:
@@ -9612,6 +9760,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Product object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
       responses:
         200:
           description: "Returns the Product object"
@@ -9632,6 +9787,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
     delete:
@@ -9668,6 +9827,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
   "/api/v1/products/{id}/edit":
@@ -9709,6 +9872,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
   "/api/v1/products/create":
@@ -9742,6 +9909,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
 
@@ -9787,6 +9958,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
 
@@ -9843,6 +10018,10 @@ paths:
           $ref: '#/components/responses/403'
         422:
           $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: '#/components/responses/default'
 
@@ -9877,7 +10056,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -9909,7 +10092,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/tasks/{id}":
@@ -9950,7 +10137,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -9990,7 +10181,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -10026,7 +10221,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/tasks/{id}/edit":
@@ -10067,7 +10266,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/tasks/create:
@@ -10100,7 +10303,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/tasks/bulk:
@@ -10144,7 +10351,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/tasks/{id}/upload":
@@ -10185,7 +10396,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/tasks/sort:
@@ -10214,7 +10429,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/purchase_orders:
@@ -10247,7 +10466,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -10279,7 +10502,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -10321,7 +10548,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/purchase_order/{id}":
@@ -10362,7 +10593,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -10398,7 +10633,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/purchase_orders/{id}/edit":
@@ -10439,7 +10678,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -10473,7 +10716,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/purchase_orders/bulk:
@@ -10513,7 +10760,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/purchase_orders/{id}/{action}":
@@ -10563,7 +10814,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/purchase_orders/{id}/upload":
@@ -10604,7 +10859,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/purchase_order/{invitation_key}/download":
@@ -10641,7 +10900,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/payments:
@@ -10710,7 +10973,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -10749,7 +11016,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -10791,7 +11062,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -10831,7 +11106,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -10867,7 +11146,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/payments/{id}/edit":
@@ -10908,7 +11191,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/payments/create:
@@ -10941,7 +11228,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/payments/refund:
@@ -10981,7 +11272,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/payments/bulk:
@@ -11025,7 +11320,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/payments/{id}/{action}":
@@ -11075,7 +11374,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -11117,7 +11420,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/vendors:
@@ -11151,7 +11458,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -11183,7 +11494,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/vendors/{id}":
@@ -11224,7 +11539,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -11264,7 +11583,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -11300,7 +11623,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/vendors/{id}/edit":
@@ -11341,7 +11668,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/vendors/create:
@@ -11374,7 +11705,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/vendors/bulk:
@@ -11418,7 +11753,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/vendors/{id}/upload":
@@ -11459,7 +11798,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/invoices:
@@ -11577,7 +11920,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -11615,7 +11962,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
 
@@ -11657,7 +12008,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
 
@@ -11698,7 +12053,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"  
     delete:
@@ -11734,7 +12093,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/invoices/{id}/edit":
@@ -11775,7 +12138,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
 
@@ -11809,7 +12176,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
 
@@ -11892,7 +12263,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
 
@@ -11954,7 +12329,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/invoice/{invitation_key}/download":
@@ -11991,7 +12370,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/invoices/{id}/delivery_note":
@@ -12028,7 +12411,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/invoices/{id}/upload":
@@ -12086,7 +12473,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/recurring_invoices:
@@ -12158,7 +12549,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -12190,7 +12585,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -12232,7 +12631,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -12272,7 +12675,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -12308,7 +12715,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/recurring_invoices/{id}/edit":
@@ -12349,7 +12760,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -12383,7 +12798,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/recurring_invoices/bulk:
@@ -12451,7 +12870,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/recurring_invoices/{id}/{action}":
@@ -12501,7 +12924,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/recurring_invoice/{invitation_key}/download":
@@ -12538,7 +12965,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/recurring_invoices/{id}/upload":
@@ -12579,7 +13010,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/credits:
@@ -12611,9 +13046,12 @@ paths:
           $ref: "#/components/responses/401"
         403:
           $ref: "#/components/responses/403"
-
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     post:
@@ -12646,7 +13084,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   
@@ -12689,7 +13131,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     put:
@@ -12730,7 +13176,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
     delete:
@@ -12767,7 +13217,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/credits/{id}/edit":
@@ -12809,7 +13263,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/credits/create:
@@ -12843,7 +13301,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/credits/bulk:
@@ -12866,8 +13328,8 @@ paths:
               type: array
               items:
                 description: "Array of hashed IDs to be bulk 'actioned"
-                type: integer
-                example: "[0,1,2,3]"
+                type: string
+                example: '[D2J234DFA,D2J234DFA,D2J234DFA]'
       responses:
         200:
           description: "The Bulk Action response"
@@ -12884,7 +13346,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/credit/{invitation_key}/download":
@@ -12922,7 +13388,11 @@ paths:
           $ref: "#/components/responses/403"
 
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   "/api/v1/credits/{id}/upload":
@@ -12963,7 +13433,11 @@ paths:
         403:
           $ref: "#/components/responses/403"
         422:
-          $ref: "#/components/responses/422"
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        5XX:
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
 components:
@@ -13006,6 +13480,12 @@ components:
           schema:
             $ref: '#components/schemas/AuthenticationError'
 
+    429:
+      description: 'Rate Limit Exceeded'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RateLimiterError'
     default:
       description: 'Unexpected Error'
       content:
@@ -13042,7 +13522,7 @@ components:
       name: X-API-PASSWORD
       in: header
       description: 'The login password when challenged on certain protected routes'
-      required: false
+      required: true
       schema:
         type: string
         example: supersecretpassword
@@ -16148,9 +16628,167 @@ components:
           description: 'The email signature for emails'
           type: string
           example: 'Bob Smith'
-        
-        
       type: object
+    ProductRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'The hashed product ID.'
+          example: eP01N
+          readOnly: true
+        assigned_user_id:
+          type: string
+          description: 'The hashed ID of the user assigned to this product.'
+          example: pR0j3
+          required: false
+        project_id:
+          type: string
+          description: 'The hashed ID of the project that this product is associated with.'
+          example: pR0j3
+          required: false
+        vendor_id:
+          type: string
+          description: 'The hashed ID of the vendor that this product is associated with.'
+          example: pR0j3
+          required: false
+        custom_value1:
+          type: string
+          description: 'Custom value field 1.'
+          example: 'Custom value 1'
+          required: false
+        custom_value2:
+          type: string
+          description: 'Custom value field 2.'
+          example: 'Custom value 2'
+          required: false
+        custom_value3:
+          type: string
+          description: 'Custom value field 3.'
+          example: 'Custom value 3'
+          required: false
+        custom_value4:
+          type: string
+          description: 'Custom value field 4.'
+          example: 'Custom value 4'
+          required: false
+        product_key:
+          type: string
+          description: 'The product key.'
+          example: '1234'
+          required: false
+        notes:
+          type: string
+          description: 'Notes about the product.'
+          example: 'These are some notes about the product.'
+          required: false
+        cost:
+          type: number
+          format: double
+          description: 'The cost of the product.'
+          example: 10.0
+          required: false
+        price:
+          type: number
+          format: double
+          description: 'The price of the product.'
+          example: 20.0
+          required: false
+        quantity:
+          type: number
+          format: double
+          description: 'The quantity of the product.'
+          example: 5.0
+          required: false
+          default: 1
+        tax_name1:
+          type: string
+          description: 'The name of tax 1.'
+          example: 'Tax 1'
+          required: false
+        tax_rate1:
+          type: number
+          format: double
+          description: 'The rate of tax 1.'
+          example: 10.0
+          required: false
+        tax_name2:
+          type: string
+          description: 'The name of tax 2.'
+          example: 'Tax 2'
+          required: false
+        tax_rate2:
+          type: number
+          format: double
+          description: 'The rate of tax 2.'
+          example: 5.0
+          required: false
+        tax_name3:
+          type: string
+          description: 'The name of tax 3.'
+          example: 'Tax 3'
+          required: false
+        tax_rate3:
+          type: number
+          format: double
+          description: 'The rate of tax 3.'
+          example: 0.0
+          required: false
+        in_stock_quantity:
+          type: integer
+          format: int32
+          description: |
+                The quantity of the product that is currently in stock. 
+                
+                **note** this field is not mutable without passing an extra query parameter which will allow modification of this value.
+
+                The query parameter ?update_in_stock_quantity=true **MUST** be passed if you wish to update this value manually.
+
+          default: 0
+          required: false
+        stock_notification:
+          type: boolean
+          description: Indicates whether stock notifications are enabled for this product
+          default: true
+          required: false
+        stock_notification_threshold:
+          type: integer
+          format: int32
+          description: The minimum quantity threshold for which stock notifications will be triggered
+          default: 0
+          required: false
+        max_quantity:
+          type: integer
+          format: int32
+          description: The maximum quantity that can be ordered for this product
+          required: false
+        product_image:
+          type: string
+          description: The URL of the product image
+          format: uri-reference
+          required: false
+        tax_id:
+          type: string
+          default: '1'
+          required: false
+          description: |
+                The tax category id for this product.'
+
+                The following constants are available (default = '1')
+                
+                ```
+                PRODUCT_TYPE_PHYSICAL = '1'
+                PRODUCT_TYPE_SERVICE = '2'
+                PRODUCT_TYPE_DIGITAL = '3'
+                PRODUCT_TYPE_SHIPPING = '4'
+                PRODUCT_TYPE_EXEMPT = '5'
+                PRODUCT_TYPE_REDUCED_TAX = '6'
+                PRODUCT_TYPE_OVERRIDE_TAX = '7'
+                PRODUCT_TYPE_ZERO_RATED = '8'
+                PRODUCT_TYPE_REVERSE_TAX = '9'
+                ```
+          example: '1'
+
     Error:
       properties:
         message:
@@ -16419,6 +17057,9 @@ components:
           example: google
       type: object
     ClientRequest:
+      required:
+        - contacts
+        - country_id
       properties:
         id:
           description: 'The unique identifier of the client'
@@ -16427,6 +17068,7 @@ components:
           readOnly: true
         contacts:
           type: array
+          description: 'A list of contacts associated with the client'
           items:
             $ref: '#/components/schemas/ClientContactRequest'
         name:
@@ -18615,6 +19257,21 @@ components:
           format: integer
           example: '134341234234'
       type: object
+
+    GenericBulkAction:
+      properties:
+        action:
+          type: string
+          example: archive
+          description: 'The action to perform ie. archive / restore / delete'
+        ids:
+          type: array
+          items:
+            format: string
+            type: string
+            example: 2J234DFA,D2J234DFA,D2J234DFA
+            description: string array of client hashed ids
+      type: object
     ClientGatewayToken:
       properties:
         id:
@@ -18653,14 +19310,17 @@ components:
           type: string
           description: 'The hashed product ID.'
           example: eP01N
+          readOnly: true
         company_id:
           type: string
           description: 'The hashed ID of the company that owns this product.'
           example: eP01N
+          readOnly: true
         user_id:
           type: string
           description: 'The hashed ID of the user that created this product.'
           example: n30m4
+          readOnly: true
         assigned_user_id:
           type: string
           description: 'The hashed ID of the user assigned to this product.'
@@ -18699,17 +19359,17 @@ components:
           example: 'These are some notes about the product.'
         cost:
           type: number
-          format: float
+          format: double
           description: 'The cost of the product.'
           example: 10.0
         price:
           type: number
-          format: float
+          format: double
           description: 'The price of the product.'
           example: 20.0
         quantity:
           type: number
-          format: float
+          format: double
           description: 'The quantity of the product.'
           example: 5.0
         tax_name1:
@@ -18718,7 +19378,7 @@ components:
           example: 'Tax 1'
         tax_rate1:
           type: number
-          format: float
+          format: double
           description: 'The rate of tax 1.'
           example: 10.0
         tax_name2:
@@ -18727,7 +19387,7 @@ components:
           example: 'Tax 2'
         tax_rate2:
           type: number
-          format: float
+          format: double
           description: 'The rate of tax 2.'
           example: 5.0
         tax_name3:
@@ -18736,7 +19396,7 @@ components:
           example: 'Tax 3'
         tax_rate3:
           type: number
-          format: float
+          format: double
           description: 'The rate of tax 3.'
           example: 0.0
         archived_at:
@@ -18744,46 +19404,66 @@ components:
           format: timestamp
           description: 'The timestamp when the product was archived.'
           example: '2022-03-18T15:00:00Z'
+          readOnly: true
         created_at:
           type: integer
           format: timestamp
           description: 'The timestamp when the product was created.'
           example: '2022-03-18T15:00:00Z'
+          readOnly: true
         updated_at:
           description: Timestamp
           type: integer
           format: timestamp
           example: '2022-03-18T12:34:56.789Z'
+          readOnly: true
         is_deleted:
           type: boolean
           description: 'Boolean flag determining if the product has been deleted'
           example: false
+          readOnly: true
         in_stock_quantity:
           type: integer
           format: int32
           description: The quantity of the product that is currently in stock
           default: 0
-
         stock_notification:
           type: boolean
           description: Indicates whether stock notifications are enabled for this product
           default: true
-
         stock_notification_threshold:
           type: integer
           format: int32
           description: The minimum quantity threshold for which stock notifications will be triggered
           default: 0
-
         max_quantity:
           type: integer
           format: int32
           description: The maximum quantity that can be ordered for this product
-
         product_image:
           type: string
           description: The URL of the product image
           format: uri-reference
+        tax_id:
+          type: string
+          default: '1'
+          description: |
+                The tax category id for this product.'
+
+                The following constants are available (default = '1')
+                
+                ```
+                PRODUCT_TYPE_PHYSICAL = '1'
+                PRODUCT_TYPE_SERVICE = '2'
+                PRODUCT_TYPE_DIGITAL = '3'
+                PRODUCT_TYPE_SHIPPING = '4'
+                PRODUCT_TYPE_EXEMPT = '5'
+                PRODUCT_TYPE_REDUCED_TAX = '6'
+                PRODUCT_TYPE_OVERRIDE_TAX = '7'
+                PRODUCT_TYPE_ZERO_RATED = '8'
+                PRODUCT_TYPE_REVERSE_TAX = '9'
+                ```
+          example: '1'
 
     Quote:
       properties:
