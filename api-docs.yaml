@@ -20903,7 +20903,7 @@ components:
           description: 'The currency id of the related invoice'
           type: string
           example: '1'
-        expense_currency_id:
+        currency_id:
           description: 'The currency id of the expense'
           type: string
           example: '2'
@@ -21235,6 +21235,8 @@ components:
           type: string
           example: '123456'
           readOnly: true
+        company_user:
+          $ref: '#/components/schemas/CompanyUser'
       type: object
     Account:
       properties:
