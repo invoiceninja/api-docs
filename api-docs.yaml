@@ -26,8 +26,8 @@ paths:
   /api/v1/activities:
     get:
       tags:
-        - actvities
-      summary: "Returns a list of actvities"
+        - activities
+      summary: "Returns a list of activities"
       description: "Lists all activities related to this company"
       operationId: getActivities
       parameters:
@@ -68,10 +68,10 @@ paths:
           $ref: "#/components/responses/422"
         default:
           $ref: "#/components/responses/default"
-  "/api/v1/actvities/download_entity/{activity_id}":
+  "/api/v1/activities/download_entity/{activity_id}":
     get:
       tags:
-        - actvities
+        - activities
       summary: "Returns a PDF for the given activity"
       description: "Returns a PDF for the given activity"
       operationId: getActivityHistoricalEntityPdf
@@ -115,8 +115,6 @@ paths:
       summary: "Attempts authentication"
       description: "Returns a CompanyUser object on success"
       operationId: postLogin
-      security:
-        - []
       parameters:
         - $ref: "#/components/parameters/X-API-SECRET"
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -161,7 +159,7 @@ paths:
         422:
           $ref: "#/components/responses/422"
         5XX:
-          $ref: "#/components/responses/5XX"
+          description: 'Server error'
         default:
           $ref: "#/components/responses/default"
   /api/v1/refresh:
@@ -173,7 +171,7 @@ paths:
         Refreshes the dataset.  
 
         This endpoint can be used if you only need to access the most recent data from a certain point in time.
-        operationId: refresh
+      operationId: refresh
       parameters:
         - name: updated_at
           in: query
@@ -1359,7 +1357,7 @@ paths:
     get:
       tags:
         - client_gateway_tokens
-      summary: "List of client tokens"
+      summary: "List of client payment tokens"
       description: "Lists client_gateway_tokens, search and filters allow fine grained lists to be generated.\n\n    Query parameters can be added to performed more fine grained filtering of the client_gateway_tokens, these are handled by the ClientGatewayTokenFilters class which defines the methods available"
       operationId: getClientGatewayTokens
       parameters:
@@ -1400,8 +1398,8 @@ paths:
     post:
       tags:
         - client_gateway_tokens
-      summary: "Adds a client"
-      description: "Adds an client to a company"
+      summary: "Adds a client payment token"
+      description: "Adds a client payment token to a company"
       operationId: storeClientGatewayToken
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -1409,7 +1407,7 @@ paths:
         - $ref: "#/components/parameters/include"
       responses:
         200:
-          description: "Returns the saved client object"
+          description: "Returns the saved client payment token object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -1433,8 +1431,8 @@ paths:
     get:
       tags:
         - client_gateway_tokens
-      summary: "Shows a client"
-      description: "Displays a client by id"
+      summary: "Shows a client payment token"
+      description: "Displays a client payment token by id"
       operationId: showClientGatewayToken
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -1450,7 +1448,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the cl.ient object"
+          description: "Returns the client payment token object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -1473,8 +1471,8 @@ paths:
     put:
       tags:
         - client_gateway_tokens
-      summary: "Updates a client"
-      description: "Handles the updating of a client by id"
+      summary: "Updates a client payment token"
+      description: "Handles the updating of a client payment token by id"
       operationId: updateClientGatewayToken
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -1490,7 +1488,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the client object"
+          description: "Returns the client payment token object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -1514,7 +1512,7 @@ paths:
       tags:
         - client_gateway_tokens
       summary: "Deletes a client"
-      description: "Handles the deletion of a client by id"
+      description: "Handles the deletion of a client payment token by id"
       operationId: deleteClientGatewayToken
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -1550,7 +1548,7 @@ paths:
     get:
       tags:
         - client_gateway_tokens
-      summary: "Shows a client for editting"
+      summary: "Shows a client payment token for editting"
       description: "Displays a client by id"
       operationId: editClientGatewayToken
       parameters:
@@ -1567,7 +1565,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the client object"
+          description: "Returns the client payment token object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -1591,7 +1589,7 @@ paths:
     get:
       tags:
         - client_gateway_tokens
-      summary: "Gets a new blank client object"
+      summary: "Gets a new blank client payment token object"
       description: "Returns a blank object with default values"
       operationId: getClientGatewayTokensCreate
       parameters:
@@ -1600,7 +1598,7 @@ paths:
         - $ref: "#/components/parameters/include"
       responses:
         200:
-          description: "A blank client object"
+          description: "A blank client payment token object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -1889,7 +1887,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/companies/{id}/upload":
-    put:
+    post:
       tags:
         - companies
       summary: "Uploads a document to a company"
@@ -1907,6 +1905,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the client object"
@@ -3164,8 +3179,8 @@ paths:
     post:
       tags:
         - expenses
-      summary: "Adds a client"
-      description: "Adds an client to a company"
+      summary: "Adds an expense"
+      description: "Adds a expense to a company"
       operationId: storeExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -3173,7 +3188,7 @@ paths:
         - $ref: "#/components/parameters/include"
       responses:
         200:
-          description: "Returns the saved client object"
+          description: "Returns the saved expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -3197,8 +3212,8 @@ paths:
     get:
       tags:
         - expenses
-      summary: "Shows a client"
-      description: "Displays a client by id"
+      summary: "Shows a expense"
+      description: "Displays a expense by id"
       operationId: showExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -3237,8 +3252,8 @@ paths:
     put:
       tags:
         - expenses
-      summary: "Updates a client"
-      description: "Handles the updating of a client by id"
+      summary: "Updates a expense"
+      description: "Handles the updating of a expense by id"
       operationId: updateExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -3254,7 +3269,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the client object"
+          description: "Returns the expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -3277,8 +3292,8 @@ paths:
     delete:
       tags:
         - expenses
-      summary: "Deletes a client"
-      description: "Handles the deletion of a client by id"
+      summary: "Deletes a expense"
+      description: "Handles the deletion of a expense by id"
       operationId: deleteExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -3314,7 +3329,7 @@ paths:
     get:
       tags:
         - expenses
-      summary: "Shows a client for editting"
+      summary: "Shows a expense for editing"
       description: "Displays a client by id"
       operationId: editExpense
       parameters:
@@ -3331,7 +3346,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the client object"
+          description: "Returns the expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -3355,7 +3370,7 @@ paths:
     get:
       tags:
         - expenses
-      summary: "Gets a new blank client object"
+      summary: "Gets a new blank expense object"
       description: "Returns a blank object with default values"
       operationId: getExpensesCreate
       parameters:
@@ -3364,7 +3379,7 @@ paths:
         - $ref: "#/components/parameters/include"
       responses:
         200:
-          description: "A blank client object"
+          description: "A blank expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -3429,7 +3444,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/expenses/{id}/upload":
-    put:
+    post:
       tags:
         - expense
       summary: "Uploads a document to a expense"
@@ -3447,6 +3462,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Expense object"
@@ -3801,7 +3833,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/group_settings/{id}/upload":
-    put:
+    post:
       tags:
         - group_settings
       summary: "Uploads a document to a group setting"
@@ -3819,6 +3851,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Group Setting object"
@@ -4661,8 +4710,8 @@ paths:
     post:
       tags:
         - recurring_expenses
-      summary: "Adds a client"
-      description: "Adds an client to a company"
+      summary: "Adds a recurring expense"
+      description: "Adds a recurring expense to a company"
       operationId: storeRecurringExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -4670,7 +4719,7 @@ paths:
         - $ref: "#/components/parameters/include"
       responses:
         200:
-          description: "Returns the saved client object"
+          description: "Returns the saved recurring expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -4694,8 +4743,8 @@ paths:
     get:
       tags:
         - recurring_expenses
-      summary: "Shows a client"
-      description: "Displays a client by id"
+      summary: "Shows a recurring expense"
+      description: "Displays a recurring expense by id"
       operationId: showRecurringExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -4734,8 +4783,8 @@ paths:
     put:
       tags:
         - recurring_expenses
-      summary: "Updates a client"
-      description: "Handles the updating of a client by id"
+      summary: "Updates a recurring expense"
+      description: "Handles the updating of a recurring expense by id"
       operationId: updateRecurringExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -4751,7 +4800,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the client object"
+          description: "Returns the recurring expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -4774,8 +4823,8 @@ paths:
     delete:
       tags:
         - recurring_expenses
-      summary: "Deletes a client"
-      description: "Handles the deletion of a client by id"
+      summary: "Deletes a recurring expense"
+      description: "Handles the deletion of a recurring expense by id"
       operationId: deleteRecurringExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -4811,8 +4860,8 @@ paths:
     get:
       tags:
         - recurring_expenses
-      summary: "Shows a client for editting"
-      description: "Displays a client by id"
+      summary: "Shows a recurring expense for editting"
+      description: "Displays a recurring expense by id"
       operationId: editRecurringExpense
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -4828,7 +4877,7 @@ paths:
           example: D2J234DFA
       responses:
         200:
-          description: "Returns the client object"
+          description: "Returns the recurring expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -4852,7 +4901,7 @@ paths:
     get:
       tags:
         - recurring_expenses
-      summary: "Gets a new blank client object"
+      summary: "Gets a new blank recurring expense object"
       description: "Returns a blank object with default values"
       operationId: getRecurringExpensesCreate
       parameters:
@@ -4861,7 +4910,7 @@ paths:
         - $ref: "#/components/parameters/include"
       responses:
         200:
-          description: "A blank client object"
+          description: "A blank recurring expense object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -4926,7 +4975,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/recurring_expenses/{id}/upload":
-    put:
+    post:
       tags:
         - recurring_expense
       summary: "Uploads a document to a recurring_expense"
@@ -4944,6 +4993,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the RecurringExpense object"
@@ -8578,7 +8644,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/vendors/{id}/upload":
-    put:
+    post:
       tags:
         - vendors
       summary: "Uploads a vendor document"
@@ -8596,6 +8662,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Vendor object"
@@ -9006,7 +9089,7 @@ paths:
           $ref: '#/components/responses/default'
 
   "/api/v1/products/{id}/upload":
-    put:
+    post:
       tags:
         - products
       summary: "Add product document"
@@ -9566,7 +9649,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/recurring_invoices/{id}/upload":
-    put:
+    post:
       tags:
         - Recurring Invoices
       summary: "Add recurring invoice document"
@@ -9584,6 +9667,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the RecurringInvoice object"
@@ -10050,7 +10150,7 @@ paths:
         default:
           $ref: '#/components/responses/default'
   '/api/v1/clients/{id}/upload':
-    put:
+    post:
       tags:
         - clients
       summary: 'Add client document'
@@ -10740,7 +10840,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/credits/{id}/upload":
-    put:
+    post:
       tags:
         - credits
       summary: "Upload a credit document"
@@ -10758,6 +10858,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Credit object"
@@ -11126,7 +11243,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/projects/{id}/upload":
-    put:
+    post:
       tags:
         - projects
       summary: "Uploads a project document"
@@ -11144,6 +11261,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Project object"
@@ -11655,7 +11789,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/quotes/{id}/upload":
-    put:
+    post:
       tags:
         - quotes
       summary: "Upload a quote document"
@@ -11673,6 +11807,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Quote object"
@@ -12138,7 +12289,6 @@ paths:
               type: object
               properties:
                 action:
-                  required: true
                   type: string
                   description: |
                     The action to be performed, options include:  
@@ -12171,7 +12321,6 @@ paths:
                     - `send_email`  
                       Emails an array of invoices. Requires additional properties to be sent. `email_type`  
                 ids:
-                  required: true
                   type: array
                   items:
                     description: "Array of hashed IDs to be bulk 'actioned - ['D2J234DFA','D2J234DFA','D2J234DFA']"
@@ -12896,7 +13045,7 @@ paths:
           $ref: "#/components/responses/default"
   
   "/api/v1/payments/{id}/upload":
-    put:
+    post:
       tags:
         - payments
       summary: "Upload a payment document"
@@ -12914,6 +13063,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Payment object"
@@ -13334,7 +13500,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/purchase_orders/{id}/upload":
-    put:
+    post:
       tags:
         - Purchase Orders
       summary: "Uploads a purchase order document"
@@ -13352,6 +13518,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Purchase Order object"
@@ -13761,7 +13944,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
   "/api/v1/tasks/{id}/upload":
-    put:
+    post:
       tags:
         - tasks
       summary: "Uploads a task document"
@@ -13779,6 +13962,23 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "File Upload Body"
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                _method:
+                  type: string
+                  example: PUT
+                documents:
+                  type: array
+                  items:
+                    description: "Array of binary documents for upload"
+                    type: string
+                    format: binary
       responses:
         200:
           description: "Returns the Task object"
@@ -13858,7 +14058,6 @@ components:
       type: apiKey
       in: header       
       name: X-API-TOKEN 
-  responses:
   examples:
     Client:
       - id: Opnel5aKBz
@@ -13931,12 +14130,19 @@ components:
             - last: https://invoicing.co/api/v1/invoices?page=1
             - prev: null
             - next: null
+  responses:
+    500:
+      description: 'Gateway Error'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     403:
       description: 'Authorization error'
       content:
         application/json:
           schema:
-            $ref: '#components/schemas/AuthorizationError'
+            $ref: '#/components/schemas/AuthorizationError'
 
     default:
       description: 'Unexpected Error'
@@ -13961,13 +14167,13 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#components/schemas/AuthenticationError'
+            $ref: '#/components/schemas/AuthenticationError'
     400:      
       description: 'Invalid user input'
       content:
         application/json:
           schema:
-            $ref: '#components/schemas/InvalidInputError'
+            $ref: '#/components/schemas/InvalidInputError'
   parameters:
     X-API-SECRET:
       name: X-API-SECRET
@@ -14109,7 +14315,7 @@ components:
       description: The number of records to return for each request, default is 20
       required: false
       schema:
-        type: int
+        type: integer
         example: 20
     page_meta:
       name: page
@@ -14117,7 +14323,7 @@ components:
       description: The page number to return for this request (when performing pagination), default is 1
       required: false
       schema:
-        type: int
+        type: integer
         example: 1
     include:
       name: include
@@ -15360,7 +15566,7 @@ components:
           type: boolean
           example: true
         default_auto_bill:
-          type: enum
+          type: string
           example: 'always'
           description: |
                 A flag determining whether to auto-bill clients by default
@@ -15833,27 +16039,31 @@ components:
         id:
           description: 'The expense hashed id'
           type: string
-          example: Opnel5aKBz
+          example: 'Opnel5aKBz'
         user_id:
           description: 'The user hashed id'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
         assigned_user_id:
           description: 'The assigned user hashed id'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
+        project_id:
+          description: 'The associated project_id'
+          type: string
+          example: 'Opnel5aKBz'  
         company_id:
           description: 'The company hashed id'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
         client_id:
           description: 'The client hashed id'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
         invoice_id:
           description: 'The related invoice hashed id'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
         bank_id:
           description: 'The bank id related to this expense'
           type: string
@@ -15861,15 +16071,15 @@ components:
         invoice_currency_id:
           description: 'The currency id of the related invoice'
           type: string
-          example: ''
-        expense_currency_id:
+          example: '1'
+        currency_id:
           description: 'The currency id of the expense'
           type: string
-          example: ''
+          example: '2'
         invoice_category_id:
           description: 'The invoice category id'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
         payment_type_id:
           description: 'The payment type id'
           type: string
@@ -15877,7 +16087,7 @@ components:
         recurring_expense_id:
           description: 'The related recurring expense this expense was created from'
           type: string
-          example: ''
+          example: 'Opnel5aKBz'
         private_notes:
           description: 'The private notes of the expense'
           type: string
@@ -15910,30 +16120,34 @@ components:
           description: 'A custom value'
           type: string
           example: ''
+        tax_amount:
+          description: 'The tax amount'
+          type: number
+          example: 10.00
         tax_name1:
-          description: 'Tax name'
+          description: 'Tax Name 1'
           type: string
-          example: ''
+          example: 'GST'
         tax_name2:
-          description: 'Tax name'
+          description: 'Tax Name 2'
           type: string
-          example: ''
+          example: 'VAT'
+        tax_name3:
+          description: 'Tax Name 3'
+          type: string
+          example: 'IVA'
         tax_rate1:
-          description: 'Tax rate'
+          description: 'Tax rate 1'
           type: number
           format: float
           example: '10.00'
         tax_rate2:
-          description: 'Tax rate'
+          description: 'Tax rate 2'
           type: number
           format: float
           example: '10.00'
-        tax_name3:
-          description: 'Tax name'
-          type: string
-          example: ''
         tax_rate3:
-          description: 'Tax rate'
+          description: 'Tax rate 3'
           type: number
           format: float
           example: '10.00'
@@ -15953,13 +16167,13 @@ components:
           format: float
           example: '0.80'
         date:
-          description: 'The expense date formate Y-m-d'
+          description: 'The expense date format Y-m-d'
           type: string
           example: '2022-12-01'
         payment_date:
           description: 'The date of payment for the expense, format Y-m-d'
           type: string
-          example: ''
+          example: '2022-12-01'
         should_be_invoiced:
           description: 'Flag whether the expense should be invoiced'
           type: boolean
@@ -16949,10 +17163,6 @@ components:
           description: 'The hashed id of the company. This is a unique identifier for the company.'
           type: string
           example: Opnel5aKBz
-        client_id:
-          description: 'The hashed id of the client. This is a unique identifier for the client.'
-          type: string
-          example: Opnel5aKBz
         contacts:
           type: array
           items:
@@ -17077,8 +17287,11 @@ components:
           format: integer
           example: '134341234234'
           readOnly: true
-        settings:
-          $ref: '#/components/schemas/CompanySettings'
+        display_name:
+          description: 'The display name of the vendor.'
+          type: string
+          example: 'Bob the vendor'
+          readOnly: true
       type: object
     VendorContact:
       properties:
@@ -17091,14 +17304,17 @@ components:
           description: 'The hashed id of the user id'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         company_id:
           description: 'The hashed id of the company'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         vendor_id:
           description: 'The hashed id of the vendor'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         first_name:
           description: 'The first name of the contact'
           type: string
@@ -17107,6 +17323,16 @@ components:
           description: 'The last name of the contact'
           type: string
           example: Windsor
+        contact_key:
+          description: 'A unique identifier for the contact'
+          type: string
+          example: JD0X52bkfZlJRiroCJ0tcSiAjsJTntZ5uqKdiZ0a
+          readOnly: true
+        confirmation_code:
+          description: 'The confirmation code used to authenticate the contacts email address'
+          type: string
+          example: 333-sdjkh34gbasd
+          readOnly: true
         phone:
           description: 'The contacts phone number'
           type: string
@@ -17131,6 +17357,16 @@ components:
           description: 'The contact email address'
           type: string
           example: harry@windsor.com
+        email_verified_at:
+          description: 'The date which the contact confirmed their email'
+          type: number
+          format: integer
+          example: '134341234234'
+          readOnly: true
+        password:
+          description: 'The hashed password of the contact'
+          type: string
+          example: '*****'
         is_primary:
           description: 'Boolean flag determining if the contact is the primary contact for the vendor'
           type: boolean
@@ -17808,7 +18044,7 @@ components:
       type: object
       properties:
         quantity:
-          type: integer
+          type: number
           example: 1
           description: 'The quantity of the product offered for this line item'
         cost:
@@ -18379,6 +18615,8 @@ components:
           type: string
           example: '123456'
           readOnly: true
+        company_user:
+          $ref: '#/components/schemas/CompanyUser'
       type: object
     CompanyGateway:
       properties:
@@ -20776,18 +21014,22 @@ components:
           description: 'The hashed if of the contact'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         user_id:
           description: 'The hashed id of the user who created the contact'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         company_id:
           description: 'The hashed id of the company'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         client_id:
           description: 'The hashed id of the client'
           type: string
           example: Opnel5aKBz
+          readOnly: true
         first_name:
           description: 'The first name of the contact'
           type: string
@@ -20824,18 +21066,26 @@ components:
           description: 'The terms of service which the contact has accpeted'
           type: string
           example: 'A long set of ToS'
+          readOnly: true
         password:
           description: 'The hashed password of the contact'
           type: string
           example: '*****'
-        confirmation-code:
+        confirmation_code:
           description: 'The confirmation code used to authenticate the contacts email address'
           type: string
           example: 333-sdjkh34gbasd
+          readOnly: true
         token:
           description: 'A uuid based token.'
           type: string
           example: 333-sdjkh34gbasd
+          readOnly: true
+        contact_key:
+          description: 'A unique identifier for the contact'
+          type: string
+          example: JD0X52bkfZlJRiroCJ0tcSiAjsJTntZ5uqKdiZ0a
+          readOnly: true
         is_primary:
           description: 'Defines is this contact is the primary contact for the client'
           type: boolean
@@ -20857,31 +21107,37 @@ components:
           type: number
           format: integer
           example: '3'
+          readOnly: true
         email_verified_at:
           description: 'The date which the contact confirmed their email'
           type: number
           format: integer
           example: '134341234234'
+          readOnly: true
         last_login:
           description: Timestamp
           type: number
           format: integer
           example: '134341234234'
+          readOnly: true
         created_at:
           description: Timestamp
           type: number
           format: integer
           example: '134341234234'
+          readOnly: true
         updated_at:
           description: Timestamp
           type: number
           format: integer
           example: '134341234234'
+          readOnly: true
         deleted_at:
           description: Timestamp
           type: number
           format: integer
           example: '134341234234'
+          readOnly: true
       type: object
 
     FeesAndLimits:
