@@ -14748,11 +14748,6 @@ components:
           description: 'The hashed product ID.'
           example: eP01N
           readOnly: true
-        company_id:
-          type: string
-          description: 'The hashed ID of the company that owns this product.'
-          example: eP01N
-          readOnly: true
         user_id:
           type: string
           description: 'The hashed ID of the user that created this product.'
@@ -15320,10 +15315,6 @@ components:
           example: Opnel5aKBz
         assigned_user_id:
           description: 'The assigned user hashed id'
-          type: string
-          example: Opnel5aKBz
-        company_id:
-          description: 'The company hashed id'
           type: string
           example: Opnel5aKBz
         client_id:
@@ -16420,10 +16411,6 @@ components:
           description: 'The account hashed id'
           type: string
           example: AS3df3A
-        company_id:
-          description: 'The company hashed id'
-          type: string
-          example: AS3df3A
         user_id:
           description: 'The user_id hashed id'
           type: string
@@ -16851,11 +16838,6 @@ components:
           description: 'The assigned user hashed id'
           type: string
           example: Opnel5aKBz
-        company_id:
-          description: 'The company hashed id'
-          type: string
-          example: Opnel5aKBz
-          readOnly: true
         client_id:
           description: 'The client hashed id'
           type: string
@@ -17666,10 +17648,6 @@ components:
           description: 'The unique hashed identifier for the user assigned to the purchase order'
           type: string
           example: ''
-        company_id:
-          description: 'The unique hashed identifier for the company associated with the purchase order'
-          type: string
-          example: ''
         vendor_id:
           description: 'The unique hashed identifier for the vendor associated with the purchase order'
           type: string
@@ -17916,10 +17894,6 @@ components:
           example: Opnel5aKBz
         assigned_user_id:
           description: 'The assigned user of the task'
-          type: string
-          example: Opnel5aKBz
-        company_id:
-          description: 'The hashed id of the company'
           type: string
           example: Opnel5aKBz
         client_id:
@@ -18204,11 +18178,6 @@ components:
           type: string
           example: Opnel5aKBz
           readOnly: true
-        company_id:
-          description: 'The hashed id of the company'
-          type: string
-          example: Opnel5aKBz
-          readOnly: true
         vendor_id:
           description: 'The hashed id of the vendor'
           type: string
@@ -18303,10 +18272,6 @@ components:
           description: Unique identifier for the product associated with the subscription
           type: string
           example: Pr5Ft7yBmC
-        company_id:
-          description: Unique identifier for the company associated with the subscription
-          type: string
-          example: Co7Vn3yLmW
         recurring_invoice_id:
           description: Unique identifier for the recurring invoice associated with the subscription
           type: string
@@ -18758,10 +18723,6 @@ components:
           description: 'The assigned user hashed id'
           type: string
           example: Opnel5aKBz
-        company_id:
-          description: 'The company hashed id'
-          type: string
-          example: Opnel5aKBz
         client_id:
           description: 'The client hashed id'
           type: string
@@ -18985,10 +18946,6 @@ components:
           description: 'The unique hashed identifier for the user assigned to the quote'
           type: string
           example: ''
-        company_id:
-          description: 'The unique hashed identifier for the company associated with the quote'
-          type: string
-          example: ''
         client_id:
           description: 'The unique hashed identifier for the client associated with the quote'
           type: string
@@ -19206,11 +19163,6 @@ components:
           description: 'The assigned user hashed id'
           type: string
           example: Opnel5aKBz
-        company_id:
-          description: 'The company hashed id'
-          type: string
-          example: Opnel5aKBz
-          readOnly: true
         client_id:
           description: 'The client hashed id'
           type: string
@@ -19591,10 +19543,6 @@ components:
           example: Opnel5aKBz
         assigned_user_id:
           description: 'The hashed id of the assigned user to this vendor. This is a unique identifier for the user.'
-          type: string
-          example: Opnel5aKBz
-        company_id:
-          description: 'The hashed id of the company. This is a unique identifier for the company.'
           type: string
           example: Opnel5aKBz
         contacts:
@@ -20575,10 +20523,6 @@ components:
           description: 'The hashed id of the user assigned to this recurring expense'
           type: string
           example: Opnel5aKBz
-        company_id:
-          description: 'The hashed id of the company'
-          type: string
-          example: Opnel5aKBz
         client_id:
           description: 'The hashed id of the client'
           type: string
@@ -20843,10 +20787,6 @@ components:
           description: 'The associated project_id'
           type: string
           example: 'Opnel5aKBz'  
-        company_id:
-          description: 'The company hashed id'
-          type: string
-          example: 'Opnel5aKBz'
         client_id:
           description: 'The client hashed id'
           type: string
