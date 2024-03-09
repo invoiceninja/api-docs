@@ -135,9 +135,6 @@ paths:
         content:
           application/json:
             schema:
-              required:
-                - email
-                - password
               properties:
                 email:
                   description: "The users email address."
@@ -153,6 +150,9 @@ paths:
                   description: "The one time password if 2FA is enabled"
                   type: string
                   example: "123456"
+              required:
+                - email
+                - password
               type: object
       responses:
         200:
