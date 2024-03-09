@@ -21200,14 +21200,17 @@ components:
           description: 'Determines whether the user owns this company'
           type: boolean
           example: true
+          readOnly: true
         is_admin:
           description: 'Determines whether the user is the admin of this company'
           type: boolean
           example: true
+          readOnly: true
         is_locked:
           description: 'Determines whether the users access to this company has been locked'
           type: boolean
           example: true
+          readOnly: true
         updated_at:
           description: 'The last time the record was modified, format Unix Timestamp'
           type: integer
