@@ -135,10 +135,10 @@ paths:
         content:
           application/json:
             schema:
-              properties:
               required:
-              - email
-              - password
+                - email
+                - password
+              properties:
                 email:
                   description: "The users email address."
                   type: string
