@@ -120,7 +120,7 @@ paths:
         also include in the response of this object both the company and the user object, this can be done by using the include parameter.
 
         /api/v1/login?include=company,user
-        
+
       operationId: postLogin
       parameters:
         - $ref: "#/components/parameters/X-API-SECRET"
@@ -158,7 +158,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Client"
+                $ref: "#/components/schemas/CompanyUser"
         401:
           $ref: "#/components/responses/401"
         403:
