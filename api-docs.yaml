@@ -15,7 +15,7 @@ info:
   license:
     name: 'Elastic License'
     url: 'https://www.elastic.co/licensing/elastic-license'
-  version: 5.5.70
+  version: 5.8.34
 servers:
   -
     url: 'https://demo.invoiceninja.com'
@@ -112,7 +112,7 @@ paths:
     post:
       tags:
         - login
-      summary: "Attempts au thentication"
+      summary: "Attempts authentication"
       description: |
         After authenticating with the API, the returned object is a CompanyUser object which is a bridge linking the user to the company. 
 
@@ -140,10 +140,17 @@ paths:
                   description: "The users email address."
                   type: string
                   example: "demo@invoiceninja.com"
+                  required: true
                 password:
                   description: "The user password. Must meet minimum criteria ~ > 6 characters"
                   type: string
                   example: "Password0"
+                  required: true
+                one_time_password:
+                  description: "The one time password if 2FA is enabled"
+                  type: string
+                  example: "123456"
+                  required: false
               type: object
       responses:
         200:
