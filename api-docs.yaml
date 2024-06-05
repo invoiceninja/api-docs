@@ -35,6 +35,7 @@ paths:
         - activities
       summary: "Returns a list of activities"
       description: "Lists all activities related to this company"
+      x-ui-component: interactive-form
       operationId: getActivities
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
