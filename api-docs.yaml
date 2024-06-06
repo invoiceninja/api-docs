@@ -38,6 +38,10 @@ info:
               <p style="padding:10px; color: #DBDBDB;"">Production: https://invoicing.co</p>
               <p style="padding:10px; color: #DBDBDB;">Demo: https://demo.invoiceninja.com</p>
           </div>
+
+          ## Client Libraries
+
+          PHP SDK can be found [here](https://github.com/invoiceninja/sdk-php)
             
   termsOfService: 'https://invoiceninja.github.io/docs/legal/terms_of_service/#page-content'
   contact:
@@ -12031,6 +12035,20 @@ paths:
       tags:
         - clients
       summary: 'List clients'
+      x-badges:
+        - color: blue
+          label: core
+      x-code-samples:
+      - lang: javascript
+        source: |
+          fetch('/example')
+            .then(response => response.json())
+            .then(data => console.log(data));
+      x-custom-element:
+            type: markdown
+            value: |
+              ### Custom Response Description
+              This is a custom description for the response returned by the `/example` endpoint.
       description: |
             When retrieving a list of clients you can also chain query parameters in order to filter the dataset that is returned. For example, you can send a request to the following URL to retrieve clients that have a balance greater than 1000:\
               
@@ -14535,16 +14553,16 @@ components:
       examples:
         user:
           value: user
-          summary: include=user will include the user object in the response
+          summary: include=user will include the Cser object in the response
         company:
           value: company
-          summary: include=company will include the company object in the response
+          summary: include=company will include the Company object in the response
         token:
           value: token
-          summary: include=token will include the token object in the response
+          summary: include=token will include the Company Token object in the response
         account:
           value: account
-          summary: include=account will include the account object in the response
+          summary: include=account will include the Account object in the response
     per_page_meta:
       name: per_page
       in: query
@@ -14572,7 +14590,15 @@ components:
     include_static:
       name: include_static
       in: query
-      description: 'Returns static variables'
+      description: |
+        Static variables include:
+          - Currencies
+          - Countries 
+          - Languages
+          - Payment Types
+          - Email Templatees
+          - Industries
+
       required: false
       schema:
         type: string
@@ -14580,7 +14606,11 @@ components:
     clear_cache:
       name: clear_cache
       in: query
-      description: 'Clears the static cache'
+      description: |
+        Clears cache
+
+        Sometimes after a system update where the static variables have been updated, it may be necessary to clear the cache so that the static variables repopulate  
+
       required: false
       schema:
         type: string
@@ -21616,9 +21646,6 @@ CompanySettings:
           example: true
       type: object
 tags:
-  - name: overview
-    description: |
-      System overview
   - name: login
     description: |
       Attempts to authenticate with the API using a email/password combination.
