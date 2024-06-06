@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: 'Invoice Ninja API Reference.'
-  description: |
+  description: | 
         ---
           ## Introduction
           Welcome to the Invoice Ninja API documentation, your comprehensive guide to integrating Invoice Ninja's powerful features into your applications. Whether you're building a custom client, automating workflows, or integrating with other systems, our API provides the tools you need to streamline your invoicing and billing processes.
@@ -206,12 +206,10 @@ paths:
                   description: "The users email address."
                   type: string
                   example: "demo@invoiceninja.com"
-                  required: true
                 password:
                   description: "The user password. Must meet minimum criteria ~ > 6 characters"
                   type: string
                   example: "Password0"
-                  required: true
                 one_time_password:
                   description: "The one time password if 2FA is enabled"
                   type: string
