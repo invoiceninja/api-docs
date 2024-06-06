@@ -12060,13 +12060,11 @@ paths:
         - clients
       summary: 'List clients'
       x-code-samples:
-      - lang: js
+      - lang: go
         label: php
         source: |
-          ```php
           $ninja = new InvoiceNinja("your_token");
           $invoices = $ninja->clients->all();
-          ```
       x-custom-element:
             type: markdown
             value: |
