@@ -10331,6 +10331,18 @@ paths:
       tags:
         - products
       summary: "Show product"
+      x-code-samples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET 'https://invoicing.co/api/v1/products/{id}' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->get("{id}");
       description: "Displays a product by id"
       operationId: showProduct
       parameters:
@@ -10375,6 +10387,27 @@ paths:
       tags:
         - products
       summary: "Update product"
+      x-code-samples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X PUT 'https://invoicing.co/api/v1/products/{id}' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "product_key": "Updated Product",
+            "price": 150.0,
+            "notes": "An updated description of the product"
+          }'
+      - lang: go
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->update("id", [
+            "name" => "Updated Product",
+            "price" => 150.0,
+            "description" => "An updated description of the product"
+          ]);
       description: "Handles the updating of a product by id"
       operationId: updateProduct
       parameters:
@@ -10426,6 +10459,18 @@ paths:
       tags:
         - products
       summary: "Delete product"
+      x-code-samples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X DELETE 'https://invoicing.co/api/v1/products/{id}' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      - lang: go
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $ninja->products->bulk("delete", "id");
       description: "Handles the deletion of a product by id"
       operationId: deleteProduct
       parameters:
@@ -10467,6 +10512,18 @@ paths:
       tags:
         - products
       summary: "Edit product"
+      x-code-samples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET 'https://invoicing.co/api/v1/products/{id}/edit' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->get("{id}");
       description: "Displays an Product by id"
       operationId: editProduct
       parameters:
@@ -10550,6 +10607,20 @@ paths:
       tags:
         - products
       summary: "Bulk product actions"
+      x-code-samples:
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET 'https://invoicing.co/api/v1/products/bulk' \
+          -H "Content-Type:application/json" \
+          -d '{"action":"archive","ids":["id","id2"]}' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->bulk("action", ["id","id2"]);
       description: "Archive / Restore / Delete  / Set tax id in bulk"
       operationId: bulkProducts
       parameters:
