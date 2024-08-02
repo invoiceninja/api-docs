@@ -1088,7 +1088,7 @@ paths:
     post:
       tags:
         - bank_transactions
-      summary: "Performs bulk actions on an array of bank_transations"
+      summary: "Bulk actions"
       description: ""
       operationId: bulkBankTransactions
       parameters:
@@ -1132,7 +1132,7 @@ paths:
     post:
       tags:
         - bank_transactions
-      summary: "Performs match actions on an array of bank_transactions"
+      summary: "Match transactions"
       description: |
         Matching invoices or a payment to a bank transactions.
         
