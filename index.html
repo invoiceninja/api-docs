@@ -1,104 +1,26 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-  <title>Invoice Ninja API Spec</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked-highlight@2.1.1/lib/index.umd.min.js"></script>
-  <script defer="defer" src="rapidoc-min.js"></script>
+<html>
+  <head>
+    <title>Invoice Ninja API Documentation</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <script
+      id="api-reference"
+      data-url="https://api-docs.invoicing.co/api-docs.yaml"></script>
 
-  <style>
-    rapi-doc::part(textbox-nav-filter) {
-      background-color: aliceblue;
-      color: #002d88;
-      border-radius: 4px;
-      border: 2px solid #fff !important;
-      line-height: 1.2;
-      font-size: 110%;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-  
-    rapi-doc::part(btn-outline) {
-      border: 4px solid #fff;
-    }
-  
-    rapi-doc::part(btn) {
-      background-color: aliceblue;
-      color: #002d88;
-      border-radius: 4px;
-      border: 1px solid #fff;
-    }
-  
-    rapi-doc::part(operation-divider) {
-      margin-bottom: 1rem;
-    }
-  
-    rapi-doc::part(section-operation-summary) {
-      padding: 1rem;
-    }
-  
-    rapi-doc::part(pre) {
-      /* Add a border */
-      border: 1px solid #000;
-      border-radius: 4px;
-      padding: 10px;
-      margin-bottom: 20px;
-    }
-  
-  
-    /* Style code blocks */
-    rapi-doc::part(code) {
-      /* Set font family and size */
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 14px;
-      /* Set background color */
-      background-color: #000;
-      /* Add padding and margin */
-      padding: 15px;
-      margin: 0;
-    }
-  </style>
+    <script>
+      var configuration = {
+        theme: 'kepler'
+      }
 
-</head>
+      document.getElementById('api-reference').dataset.configuration =
+        JSON.stringify(configuration)
+    </script>
 
-<body>
-    <rapi-doc 
-    id="thedoc" 
-    spec-url="api-docs.yaml" 
-    render-style="read" 
-    on-nav-tag-click="show-description" 
-    load-fonts="true" 
-    show-header="false"
-    theme="darkbluenav" 
-    show-method-in-nav-bar="as-colored-text" 
-    allow-search="true" 
-    allow-advanced-search="true"
-    allow-authentication="false" 
-    regular-font="Arial" 
-    font-size="largest" 
-    mono-font="Monaco" 
-    nav-bg-color="#3f4d67"
-    nav-item-spacing="default" 
-    nav-active-item-marker="left-bar" 
-    show-info="true"
-    info-description-headings-in-navbar="true" 
-    show-curl-before-try="false" 
-    allow-server-selection="false"
-    default-api-server="https://demo.invoiceninja.com" 
-    schema-description-expanded="true" 
-    schema-style="table"
-    default-schema-tab="schema" 
-    schema-expand-level="1" 
-    use-path-in-nav-bar="false" 
-    primary-color="#002d88"
-    show-components="true"
-  > 
-
-    <img slot="nav-logo" src="https://invoicing.co/images/new_logo.png" style='width:260px'/>
-
-  </rapi-doc>
-
-
-</body>
-
+    <script src="https://cdn.jsdelivr.net/npm/@scalar/api-reference"></script>
+  </body>
 </html>
