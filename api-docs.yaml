@@ -12983,6 +12983,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
       requestBody:
         description: Client object that needs to be added to the company
@@ -13038,6 +13039,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
@@ -13075,7 +13077,12 @@ paths:
       tags:
         - clients
       summary: 'Update client'
-      description: 'Handles the updating of a client by id'
+      description: |
+        Handles the updating of a client by id
+
+        > 🚨 Important    
+        When creating (or updating) a client you must include the child contacts with all mutating requests. Client contacts cannot be modified in isolation.
+      
       x-codeSamples:
       - lang: php
         label: php
@@ -13113,6 +13120,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
@@ -13157,7 +13165,14 @@ paths:
       tags:
         - clients
       summary: 'Delete client'
-      description: 'Handles the deletion of a client by id'
+      description: |
+        Handles the deletion of a client by id
+
+        > ❗ Note
+        Deleting a client does not purge the client from the system. The delete action will remove the clients data from all 
+        views in the application but keep it all on file. A Client can be laterrestored reversing this action.  To permanently wipe a client and
+        all of their records from the system, use the /purge route
+
       x-codeSamples:
       - lang: php
         label: php
@@ -13175,6 +13190,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
@@ -13214,7 +13230,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
-        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
           description: 'The Client Hashed ID'
@@ -13257,6 +13274,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
       responses:
         200:
@@ -13349,6 +13367,7 @@ paths:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/client_include'
       requestBody:
         description: 'Bulk action array'
         required: true
@@ -13406,6 +13425,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
@@ -13425,10 +13445,24 @@ paths:
                 _method:
                   type: string
                   example: POST
-                documents:
+                documents[]:
                   type: array
+                  description: |
+                    Array of files to upload. The files should be sent with the key name 'documents[]'.
+                    
+                    Supported file types:
+                    - PDF (.pdf)
+                    - Word (.doc, .docx)
+                    - Excel (.xls, .xlsx)
+                    - Images (.jpg, .jpeg, .png)
+                    - Text (.txt)
+                    
+                    Maximum file size: 20MB per file
                   items:
+                    type: string
                     format: binary
+                    description: The file contents
+                  example: "@/path/to/document.pdf"
       responses:
         200:
           description: 'Returns the client object'
@@ -13461,8 +13495,8 @@ paths:
       description: |
             Handles purging a client.
 
-            Please note this is a destructive action.
-
+            > ❗ Note
+            This is a destructive action.
             This action will remove all data associated with the client and cannot be undone.
       x-codeSamples:
       - lang: php
@@ -13483,7 +13517,6 @@ paths:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/X-API-PASSWORD'
-        - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
           description: 'The Client Hashed ID'
@@ -13523,6 +13556,10 @@ paths:
             The id parameter is the client that will be the primary client after the merge has completed. 
 
             The mergeable_client_hashed_id is the client that will be merged into the primary client, this clients records will be updated and associated with the primary client.
+
+            > 🚨 **Important**    
+            This action requires elevated permissions, please note the X-API-PASSWORD header requirements for this route.
+            
       x-codeSamples:
       - lang: php
         label: php
@@ -13540,8 +13577,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
-        - $ref: '#/components/parameters/client_include'
         - $ref: '#/components/parameters/X-API-PASSWORD'
+        - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/client_include'
         - name: id
           in: path
           description: 'The Client Hashed ID'
@@ -13614,7 +13652,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
-        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/client_include'
       requestBody:
         description: 'Statement Options'
         required: true
@@ -13677,7 +13716,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
-        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/client_include'
         - name: bounce_id
           in: path
           description: 'The postmark Bounce ID reference'
@@ -13720,7 +13760,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
-        - $ref: '#/components/parameters/include'
+        - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/client_include'
         - name: client
           in: path
           description: 'The Client Hashed ID reference'
