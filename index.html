@@ -16,7 +16,12 @@
       var configuration = {
         theme: 'kepler',
         hideTestRequestButton: true,
-        hiddenClients: [],
+        // hiddenClients: true,
+        hiddenClients: { php: false, python: true, c: true, node: true, javascript: true, go: true, java: true, ruby: true, shell: false, clojure: true, csharp: true, kotlin: true, objc: true, swift: true, r: true, powershell: true, ocaml: true, curl: false, http: true },
+        defaultHttpClient: {
+            targetKey: 'php',
+            clientKey: 'guzzle',
+        },
         defaultOpenAllTags: true
       }
 
