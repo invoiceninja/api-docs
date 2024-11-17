@@ -12704,7 +12704,12 @@ paths:
         label: php
         source: |
           $ninja = new InvoiceNinja("your_token");
-          $invoices = $ninja->clients->all();
+          $invoices = $ninja->clients->all([
+              'balance' => 'lt:10', // get all clients with a balance less than 10
+              'per_page' => 10, // return 10 results per page
+              'page' => 2, // paginate to page 2
+              'include' => 'documents', // include the documents relationship
+          ]);
       - lang: curl
         label: curl
         source: |
