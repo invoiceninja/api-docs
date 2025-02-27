@@ -9104,6 +9104,346 @@ paths:
           description: 'Server error'
         default:
           $ref: "#/components/responses/default"
+  /api/v1/locations:
+    get:
+      tags:
+        - locations
+      summary: 'List locations'
+      description: |
+            When retrieving a list of locations you can chain query parameters to filter the dataset. For example:
+            
+            ```
+            /api/v1/locations?name=warehouse*
+            ```
+            
+            You can also sort the results:
+            
+            ```
+            /api/v1/locations?sort=name|desc
+            ```
+
+            For pagination, use per_page and page parameters:
+            
+            ```
+            /api/v1/locations?per_page=15&page=2
+            ```
+
+            The default per_page value is 20.
+      operationId: getLocations
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
+        - name: name
+          in: query
+          description: |
+            Filter by location name
+            
+            ```html
+            ?name=warehouse
+            ```
+          required: false
+          schema:
+            type: string
+          example: warehouse
+        - name: sort
+          in: query
+          description: |
+            Returns the list sorted by column in ascending or descending order.
+            
+            ```html
+              ?sort=name|desc
+            ```
+          required: false
+          schema:
+            type: string
+          example: name|desc
+      responses:
+        200:
+          description: 'A list of locations'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+
+    post:
+      tags:
+        - locations
+      summary: 'Create location'
+      description: 'Adds a location to a company'
+      operationId: storeLocation
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
+      requestBody:
+        description: Location object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+      responses:
+        200:
+          description: 'Returns the saved location object'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+
+  '/api/v1/locations/{id}':
+    get:
+      tags:
+        - locations
+      summary: 'Show location'
+      description: 'Displays a location by id'
+      operationId: showLocation
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
+        - name: id
+          in: path
+          description: 'The Location Hashed ID'
+          required: true
+          schema:
+            type: string
+            format: string
+          example: D2J234DFA
+      responses:
+        200:
+          description: 'Returns the location object'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+
+    put:
+      tags:
+        - locations
+      summary: 'Update location'
+      description: 'Handles the updating of a location by id'
+      operationId: updateLocation
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
+        - name: id
+          in: path
+          description: 'The Location Hashed ID'
+          required: true
+          schema:
+            type: string
+            format: string
+          example: D2J234DFA
+      requestBody:
+        description: Location object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationRequest'
+      responses:
+        200:
+          description: 'Returns the location object'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+
+    delete:
+      tags:
+        - locations
+      summary: 'Delete location'
+      description: 'Handles the deletion of a location by id'
+      operationId: deleteLocation
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - name: id
+          in: path
+          description: 'The Location Hashed ID'
+          required: true
+          schema:
+            type: string
+            format: string
+          example: D2J234DFA
+      responses:
+        200:
+          description: 'Returns a HTTP status'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+
+  /api/v1/locations/create:
+    get:
+      tags:
+        - locations
+      summary: 'Blank Location'
+      description: 'Returns a blank object with default values'
+      operationId: getLocationsCreate
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
+      responses:
+        200:
+          description: 'A blank location object'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+
+  /api/v1/locations/bulk:
+    post:
+      tags:
+        - locations
+      summary: 'Bulk location actions'
+      description: |
+        Bulk actions allow to make changes to multiple locations in a single request. The following actions are supported:
+        
+        - archive
+        - restore
+        - delete
+
+        All of these actions require an array of location ids to perform the requested action on ie.
+
+        "ids":['id1','id2']
+      operationId: bulkLocations
+      parameters:
+        - $ref: '#/components/parameters/X-API-TOKEN'
+        - $ref: '#/components/parameters/X-Requested-With'
+        - $ref: '#/components/parameters/index'
+      requestBody:
+        description: 'Bulk action array'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericBulkAction'
+      responses:
+        200:
+          description: 'The Location list Response of the updated locations that were bulk updated'
+          headers:
+            X-MINIMUM-CLIENT-VERSION:
+              $ref: '#/components/headers/X-MINIMUM-CLIENT-VERSION'
+            X-RateLimit-Remaining:
+              $ref: '#/components/headers/X-RateLimit-Remaining'
+            X-RateLimit-Limit:
+              $ref: '#/components/headers/X-RateLimit-Limit'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+        401:
+          $ref: '#/components/responses/401'
+        403:
+          $ref: '#/components/responses/403'
+        422:
+          $ref: '#/components/responses/422'
+        429:
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
   /api/v1/recurring_invoices:
     get:
       tags:
@@ -22150,6 +22490,90 @@ components:
           example: '134341234234'
           readOnly: true
       type: object
+    Location:
+      properties:
+        id:
+          description: 'The location hashed id'
+          type: string
+          example: Kd5S2M
+        name:
+          description: 'The location name'
+          type: string
+          example: 'Warehouse A'
+        address1:
+          description: 'The first line of the address'
+          type: string
+          example: '123 Business Street'
+        address2:
+          description: 'The second line of the address'
+          type: string
+          example: 'Suite 100'
+        city:
+          description: 'The city name'
+          type: string
+          example: 'San Francisco'
+        state:
+          description: 'The state or region'
+          type: string
+          example: 'CA'
+        postal_code:
+          description: 'The postal or zip code'
+          type: string
+          example: '94107'
+        country_id:
+          description: 'The ID of the associated country'
+          type: string
+          example: '840'
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          nullable: true
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          nullable: true
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          nullable: true
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          nullable: true
+        is_deleted:
+          description: 'Indicates if the location has been deleted'
+          type: boolean
+          example: false
+        is_shipping_location:
+          description: 'Indicates if this is a shipping location'
+          type: boolean
+          example: true
+        user_id:
+          description: 'The user hashed id'
+          type: string
+          example: Opnel5aKBz
+          readOnly: true
+        assigned_user_id:
+          description: 'The assigned user hashed id'
+          type: string
+          example: Opnel5aKBz
+        client_id:
+          description: 'The client hashed id'
+          type: string
+          example: Opnel5aKBz
+        vendor_id:
+          description: 'The vendor hashed id'
+          type: string
+          example: Opnel5aKBz
+        created_at:
+          description: 'Timestamp of when the location was created'
+          type: integer
+          example: 1623456789
+        updated_at:
+          description: 'Timestamp of when the location was last updated'
+          type: integer
+          example: 1623456999
+      type: object 
     Expense:
       properties:
         id:
@@ -22660,6 +23084,12 @@ tags:
       - Use unique client numbers for easy reference
       - Keep contact information up to date
       - Set appropriate client-specific currency and tax settings
+
+  - name: locations
+    x-displayName: Locations
+    description: |
+      The Locations API provides endpoints for managing location records within your company. A location represents a physical 
+      address where you provide services or products to a client OR vendor.
 
   - name: products
     x-displayName: Products
