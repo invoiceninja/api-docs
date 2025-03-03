@@ -71,7 +71,10 @@ info:
   license:
     name: 'Elastic License'
     url: 'https://www.elastic.co/licensing/elastic-license'
-  version: 5.10.53
+  externalDocs:
+    description: 'Invoice Ninja Documentation'
+    url: 'https://invoiceninja.github.io'
+  version: 5.11.48
 
 servers:
   - url: 'https://demo.invoiceninja.com'
