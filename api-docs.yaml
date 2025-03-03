@@ -71,9 +71,6 @@ info:
   license:
     name: 'Elastic License'
     url: 'https://www.elastic.co/licensing/elastic-license'
-  externalDocs:
-    description: 'Invoice Ninja Documentation'
-    url: 'https://invoiceninja.github.io'
   version: 5.11.48
 
 servers:
@@ -23184,6 +23181,7 @@ tags:
 
 externalDocs:
   description: "Client Libraries"
+  url: 'https://invoiceninja.github.io'
   x-libraries:
     - name: PHP SDK
       description: Official PHP client library
@@ -23196,3 +23194,4 @@ externalDocs:
 
 security:
   - ApiKeyAuth: []
+    
