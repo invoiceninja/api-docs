@@ -15438,6 +15438,13 @@ components:
         group_settings [The group settings object the client is assigned to]
         
         ```
+
+        Usage:
+
+        ```html
+
+        /api/v1/clients?include=contacts,documents,activities
+        ```
       required: false
       schema:
         type: string
