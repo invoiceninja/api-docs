@@ -16042,41 +16042,43 @@ components:
       type: object
 
     PaymentType:
-      type: string
-      enum:
-        - ACH
-        - Alipay
-        - "American Express"
-        - "Bank Transfer"
-        - "Carte Blanche"
-        - Cash
-        - Check
-        - Credit
-        - "Credit Card Other"
-        - Cryptocurrency
-        - Debit
-        - "Diners Card"
-        - "Discover Card"
-        - EuroCard
-        - GoCardless
-        - "Google Wallet"
-        - JCB
-        - Laser
-        - Maestro
-        - MasterCard
-        - "Money Order"
-        - Nova
-        - PayPal
-        - "SEPA Direct Debit"
-        - Sofort
-        - Solo
-        - Swish
-        - Switch
-        - UnionPay
-        - Venmo
-        - "Visa Card"
-        - Zelle
-        - iZettle
+      type: integer
+      enum: [4, 27, 7, 1, 16, 2, 15, 32, 12, 31, 3, 9, 8, 10, 30, 14, 18, 19, 20, 6, 26, 11, 13, 29, 28, 21, 24, 22, 17, 25, 5, 33, 23]
+      x-enum-descriptions: [
+        "ACH",
+        "Alipay",
+        "American Express",
+        "Bank Transfer",
+        "Carte Blanche",
+        "Cash",
+        "Check",
+        "Credit",
+        "Credit Card Other",
+        "Cryptocurrency",
+        "Debit",
+        "Diners Card",
+        "Discover Card",
+        "EuroCard",
+        "GoCardless",
+        "Google Wallet",
+        "JCB",
+        "Laser",
+        "Maestro",
+        "MasterCard",
+        "Money Order",
+        "Nova",
+        "PayPal",
+        "SEPA Direct Debit",
+        "Sofort",
+        "Solo",
+        "Swish",
+        "Switch",
+        "UnionPay",
+        "Venmo",
+        "Visa Card",
+        "Zelle",
+        "iZettle"
+      ]
 
     Meta:
       properties:
@@ -16527,10 +16529,6 @@ components:
           type: number
           example: 100
           readOnly: true
-        location_id:
-          description: 'The location id for the client'
-          type: string
-          example: Opnel5aKBz
         settings:
           $ref: '#/components/schemas/ClientSettings'
       type: object
@@ -18383,11 +18381,7 @@ components:
           type: string
           example: Opnel5aKBz
         type_id:
-          allOf:
-            - $ref: '#/components/schemas/PaymentType'
-            - description: 'The Payment Type ID'
-              type: string
-              example: '1'
+          $ref: '#/components/schemas/PaymentType'
         date:
           description: 'The Payment date'
           type: string
