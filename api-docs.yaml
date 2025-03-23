@@ -12626,6 +12626,25 @@ paths:
         - payments
       summary: "Create payment"
       description: "Adds an Payment to the system"
+      x-codeSamples:
+        - lang: php
+          label: php
+          source: |
+            $ninja = new InvoiceNinja("YOUR-TOKEN");
+            
+            $payment = $ninja->payments->create([
+                'client_id' => 'x2fd23',
+                'amount' => 100,
+                'date' => '2021-01-01',
+                'transaction_reference' => '1234567890',
+                'type_id' => 1,
+                'invoices' => [
+                    [
+                        'invoice_id' => 'jd78Dhjs',
+                        'amount' => 100,
+                    ]
+                ]
+            ]);
       operationId: storePayment
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
