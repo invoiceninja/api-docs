@@ -16042,44 +16042,41 @@ components:
       type: object
 
     PaymentType:
-      oneOf:
-        - type: integer
-          title: "Payment Types"
-          description: |
-            Available payment types:
-            - 4: ACH
-            - 27: Alipay
-            - 7: American Express
-            - 1: Bank Transfer
-            - 16: Carte Blanche
-            - 2: Cash
-            - 15: Check
-            - 32: Credit
-            - 12: Credit Card Other
-            - 31: Cryptocurrency
-            - 3: Debit
-            - 9: Diners Card
-            - 8: Discover Card
-            - 10: EuroCard
-            - 30: GoCardless
-            - 14: Google Wallet
-            - 18: JCB
-            - 19: Laser
-            - 20: Maestro
-            - 6: MasterCard
-            - 26: Money Order
-            - 11: Nova
-            - 13: PayPal
-            - 29: SEPA Direct Debit
-            - 28: Sofort
-            - 21: Solo
-            - 24: Swish
-            - 22: Switch
-            - 17: UnionPay
-            - 25: Venmo
-            - 5: Visa Card
-            - 33: Zelle
-            - 23: iZettle
+      type: integer
+      enum: 
+        - 4 # ACH
+        - 27 # Alipay
+        - 7 # American Express
+        - 1 # Bank Transfer
+        - 16 # Carte Blanche
+        - 2 # Cash
+        - 15 # Check
+        - 32 # Credit
+        - 12 # Credit Card Other
+        - 31 # Cryptocurrency
+        - 3 # Debit
+        - 9 # Diners Card
+        - 8 # Discover Card
+        - 10 # EuroCard
+        - 30 # GoCardless
+        - 14 # Google Wallet
+        - 18 # JCB
+        - 19 # Laser
+        - 20 # Maestro
+        - 6 # MasterCard
+        - 26 # Money Order
+        - 11 # Nova
+        - 13 # PayPal
+        - 29 # SEPA Direct Debit
+        - 28 # Sofort
+        - 21 # Solo
+        - 24 # Swish
+        - 22 # Switch
+        - 17 # UnionPay
+        - 25 # Venmo
+        - 5 # Visa Card
+        - 33 # Zelle
+        - 23 # iZettle
 
     CurrencyType:
       oneOf:
