@@ -9188,6 +9188,53 @@ paths:
         - locations
       summary: 'Create location'
       description: 'Adds a location to a company'
+      x-codeSamples:
+        - lang: php
+          label: php
+          source: |
+            $ninja = new InvoiceNinja("YOUR-TOKEN");
+            
+            $client = $ninja->locations->create([
+                'name' => 'A unique client location name',
+                'address1' => '123 Main St',
+                'address2' => 'Apt 1',
+                'city' => 'New York',
+                'state' => 'NY',
+                'postal_code' => '10001',
+                'country_id' => '1',
+                'custom_value1' => 'Custom field value 1',
+                'custom_value2' => 'Custom field value 2',
+                'custom_value3' => 'Custom field value 3',
+                'custom_value4' => 'Custom field value 4',
+                'is_deleted' => false,
+                'is_shipping_location' => true,
+                'client_id' => 'x2fd23',
+                'vendor_id' => 'jd78Dhjs'
+            ]);
+        - lang: curl
+          label: curl
+          source: |
+            curl -X POST https://demo.invoiceninja.com/api/v1/locations \
+              -H "X-API-TOKEN: YOUR-TOKEN" \
+              -H "Content-Type: application/json" \
+              -H "X-Requested-With: XMLHttpRequest" \
+              -d '{
+                "name": "A unique location name",
+                "address1": "123 Main St",
+                "address2": "Apt 1",
+                "city": "New York",
+                "state": "NY",
+                "postal_code": "10001",
+                "country_id": "1",
+                "custom_value1": "Custom field value 1",
+                "custom_value2": "Custom field value 2",
+                "custom_value3": "Custom field value 3",
+                "custom_value4": "Custom field value 4",
+                "is_deleted": false,
+                "is_shipping_location": true,
+                "client_id": "x2fd23",
+                "vendor_id": "jd78Dhjs"
+              }'
       operationId: storeLocation
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
