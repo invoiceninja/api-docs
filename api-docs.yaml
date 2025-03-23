@@ -16043,7 +16043,6 @@ components:
 
     PaymentType:
       type: integer
-      enum: [4, 27, 7, 1, 16, 2, 15, 32, 12, 31, 3, 9, 8, 10, 30, 14, 18, 19, 20, 6, 26, 11, 13, 29, 28, 21, 24, 22, 17, 25, 5, 33, 23]
       description: |
         Payment type identifier:
         - 4: ACH
