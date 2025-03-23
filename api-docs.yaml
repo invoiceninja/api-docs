@@ -13633,8 +13633,8 @@ paths:
 
         > ❗ Note
         Deleting a client does not purge the client from the system. The delete action will remove the clients data from all 
-        views in the application but keep it all on file. A Client can be laterrestored reversing this action.  To permanently wipe a client and
-        all of their records from the system, use the /purge route
+        views in the application but keep it all on file. A Client can be later restored reversing this action.  To permanently wipe a client and
+        all of their records from the system, use the [/purge route](#tag/clients/POST/api~1v1~1clients~1{id}~1purge)
 
       x-codeSamples:
       - lang: php
