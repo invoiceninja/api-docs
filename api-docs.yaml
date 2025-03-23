@@ -15442,7 +15442,6 @@ components:
         Usage:
 
         ```html
-
         /api/v1/clients?include=contacts,documents,activities
         ```
       required: false
@@ -16041,6 +16040,44 @@ components:
           type: string
           example: JSON
       type: object
+
+    PaymentType:
+      type: string
+      enum:
+        - ACH
+        - Alipay
+        - "American Express"
+        - "Bank Transfer"
+        - "Carte Blanche"
+        - Cash
+        - Check
+        - Credit
+        - "Credit Card Other"
+        - Cryptocurrency
+        - Debit
+        - "Diners Card"
+        - "Discover Card"
+        - EuroCard
+        - GoCardless
+        - "Google Wallet"
+        - JCB
+        - Laser
+        - Maestro
+        - MasterCard
+        - "Money Order"
+        - Nova
+        - PayPal
+        - "SEPA Direct Debit"
+        - Sofort
+        - Solo
+        - Swish
+        - Switch
+        - UnionPay
+        - Venmo
+        - "Visa Card"
+        - Zelle
+        - iZettle
+
     Meta:
       properties:
         pagination:
@@ -16490,6 +16527,10 @@ components:
           type: number
           example: 100
           readOnly: true
+        location_id:
+          description: 'The location id for the client'
+          type: string
+          example: Opnel5aKBz
         settings:
           $ref: '#/components/schemas/ClientSettings'
       type: object
@@ -16707,6 +16748,10 @@ components:
           description: 'Boolean flag indicating if taxes are charged on the fourth custom surcharge amount'
           type: boolean
           example: true
+        location_id:
+          description: 'The client location id that this invoice relates to'
+          type: string
+          example: Opnel5aKBz
       type: object
     InvoiceRequest:
       required:
@@ -18309,6 +18354,10 @@ components:
           description: 'Toggles charging taxes on custom surcharge amounts'
           type: boolean
           example: true
+        location_id:
+          description: 'The client location id that this invoice relates to'
+          type: string
+          example: Opnel5aKBz
       type: object
       
     Payment:
@@ -18334,9 +18383,11 @@ components:
           type: string
           example: Opnel5aKBz
         type_id:
-          description: 'The Payment Type ID'
-          type: string
-          example: '1'
+          allOf:
+            - $ref: '#/components/schemas/PaymentType'
+            - description: 'The Payment Type ID'
+              type: string
+              example: '1'
         date:
           description: 'The Payment date'
           type: string
@@ -18619,6 +18670,10 @@ components:
           description: 'Toggles charging taxes on custom surcharge amounts'
           type: boolean
           example: true
+        location_id:
+          description: 'The client location id that this invoice relates to'
+          type: string
+          example: Opnel5aKBz
       type: object
     Subscription:
       properties:
@@ -20841,7 +20896,10 @@ components:
           description: 'The subscription associated with this invoice'
           type: string
           example: Opnel5aKBz
-        
+        location_id:
+          description: 'The client location id that this invoice relates to'
+          type: string
+          example: Opnel5aKBz
       type: object
     ClientRequest:
       required:
