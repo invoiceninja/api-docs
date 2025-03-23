@@ -12658,7 +12658,7 @@ paths:
           schema:
             type: boolean
       requestBody:
-        description: "The payment request"
+        description: "The payment request can be as simple as a client id and amount, or as complex as a full payment with invoices and associated credits that should be applied."
         required: true
         content:
           application/json:
