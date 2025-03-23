@@ -13182,31 +13182,31 @@ paths:
             --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
             --header 'Accept: application/json'
       description: |
-            When retrieving a list of clients you can also chain query parameters in order to filter the dataset that is returned. For example, you can send a request to the following URL to retrieve clients that have a balance greater than 1000:\
+            When retrieving a list of clients you can also chain query parameters in order to filter the dataset that is returned. For example, you can send a request to the following URL to retrieve clients that have a balance greater than 1000
               
             ```
             /api/v1/clients?balance=gt:1000
             ``` 
             
-            You can also sort the results by adding a sort parameter. The following example will sort the results by the client name in descending order:\
+            You can also sort the results by adding a sort parameter. The following example will sort the results by the client name in descending order
             
             ```
             /api/v1/clients?sort=name|desc
             ```
 
-            You can also combine multiple filters together. The following example will return clients that have a balance greater than 1000 and are not deleted and have a name that starts with "Bob":\
+            You can also combine multiple filters together. The following example will return clients that have a balance greater than 1000 and are not deleted and have a name that starts with "Bob"
             
             ```
             /api/v1/clients?balance=gt:1000&name=Bob*
             ```
 
-            If you wish to retrieve child relations, you can also combine the query parameter `?include=` with a comma separated list of relationships:\
+            If you wish to retrieve child relations, you can also combine the query parameter `?include=` with a comma separated list of relationships
             
             ```
             /api/v1/clients?include=activities,ledger,system_logs'
             ```
 
-            The per_page and page variables allow pagination of the list of clients. The following example will return the second page of clients with 15 clients per page:\
+            The per_page and page variables allow pagination of the list of clients. The following example will return the second page of clients with 15 clients per page
             
             ```
             /api/v1/clients?per_page=15&page=2
@@ -13450,7 +13450,6 @@ paths:
         - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/client_include'
       requestBody:
-        description: Client object that needs to be added to the company
         required: true
         content:
           application/json:
@@ -21636,6 +21635,7 @@ components:
             Optionally, instead of the country_id you can pass either the iso_3166_2 or iso_3166_3 country code into the country_code property.
           type: number
           format: integer
+          $ref: '#/components/schemas/CountryType'
           example: '1'
         custom_value1:
           description: 'A custom field for storing additional information'
@@ -21748,11 +21748,6 @@ components:
       type: object
     ClientContactRequest:
       properties:
-        id:
-          description: 'The hashed if of the contact'
-          type: string
-          example: Opnel5aKBz
-          readOnly: true
         first_name:
           description: 'The first name of the contact'
           type: string
@@ -21790,7 +21785,7 @@ components:
           type: string
           example: '*****'
         send_email:
-          description: 'Boolean value determines is this contact should receive emails'
+          description: 'Boolean flag that determines if this contact should receive emails'
           type: boolean
           example: true
       type: object
