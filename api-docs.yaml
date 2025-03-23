@@ -16064,74 +16064,41 @@ components:
       type: integer
       description: The payment type used to complete this payment
       example: 1
-      enum:
-        - 4
-        - 27
-        - 7
-        - 1
-        - 16
-        - 2
-        - 15
-        - 32
-        - 12
-        - 31
-        - 3
-        - 9
-        - 8
-        - 10
-        - 30
-        - 14
-        - 18
-        - 19
-        - 20
-        - 6
-        - 26
-        - 11
-        - 13
-        - 29
-        - 28
-        - 21
-        - 24
-        - 22
-        - 17
-        - 25
-        - 5
-        - 33
-        - 23
+      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
       x-enumDescriptions:
-        4: ACH
-        27: Alipay
-        7: American Express
         1: Bank Transfer
-        16: Carte Blanche
         2: Cash
-        15: Check
-        32: Credit
-        12: Credit Card Other
-        31: Cryptocurrency
         3: Debit
-        9: Diners Card
+        4: ACH
+        5: Visa Card
+        6: MasterCard
+        7: American Express
         8: Discover Card
+        9: Diners Card
         10: EuroCard
-        30: GoCardless
+        11: Nova
+        12: Credit Card Other
+        13: PayPal
         14: Google Wallet
+        15: Check
+        16: Carte Blanche
+        17: UnionPay
         18: JCB
         19: Laser
         20: Maestro
-        6: MasterCard
-        26: Money Order
-        11: Nova
-        13: PayPal
-        29: SEPA Direct Debit
-        28: Sofort
         21: Solo
-        24: Swish
         22: Switch
-        17: UnionPay
-        25: Venmo
-        5: Visa Card
-        33: Zelle
         23: iZettle
+        24: Swish
+        25: Venmo
+        26: Money Order
+        27: Alipay
+        28: Sofort
+        29: SEPA Direct Debit
+        30: GoCardless
+        31: Cryptocurrency
+        32: Credit
+        33: Zelle
 
     CurrencyType:
       oneOf:
