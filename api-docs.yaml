@@ -11162,8 +11162,27 @@ paths:
         - invoices
       summary: "List invoices"
       description: |
+        ##  GET /api/v1/invoices
+
         Lists invoices with the option to chain multiple query parameters allowing fine grained filtering of the list.  
-        
+      
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoices = $ninja->invoices->all([
+            'per_page' => 10,
+            'page' => 1,
+            'sort' => 'number|asc'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://invoicing.co/api/v1/invoices?per_page=10&page=1&sort=number&sort_dir=asc' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       operationId: getInvoices
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -11209,6 +11228,9 @@ paths:
             - custom_value2  
             - custom_value3  
             - custom_value4
+            - client.name
+            - client.contacts.[first_name, last_name, email]
+            - line_items.[product_key, notes]
           required: false
           schema:
             type: string
@@ -11268,6 +11290,23 @@ paths:
           schema:
             type: string
           example: ?date_range=2022-01-01,2022-01-31
+        - name: status_id
+          in: query
+          description: |
+            Filters the invoices by status id
+
+            ```html
+              STATUS_DRAFT = 1;
+              STATUS_SENT = 2;
+              STATUS_PARTIAL = 3;
+              STATUS_PAID = 4;
+              STATUS_CANCELLED = 5;
+              STATUS_REVERSED = 6;
+            ```
+          required: false
+          schema:
+            type: integer
+          example: ?status_id=1
       responses:
         200:
           description: "A list of invoices"
@@ -11307,9 +11346,11 @@ paths:
         - invoices
       summary: "Create invoice"
       description: | 
-        Adds a invoice to a company
+        ## POST /api/v1/invoices
+        Creates an invoice for a client.
 
-        Triggered actions are available when updating or creating an invoice.  
+        Triggered actions are available when updating or creating an invoice.
+
         These are query parameters that can be chained in order to perform additional actions on the entity, these include:
 
           ```
@@ -11320,8 +11361,86 @@ paths:
           ?cancel=true [Saves and marks the invoice as cancelled]
           ?save_default_footer=true [Saves the current footer as the default footer]
           ?save_default_terms=true [Saves the current terms as the default terms]
+          ?retry_e_send=true [Saves and retries the e-send for the invoice]
+          ?redirect=https://example.com [Saves and redirects to the given url]
           ```
-
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoices = $ninja->invoices->create([
+            'client_id' => 'AxP7K9nY5z',
+            'date' => '2022-01-01',
+            'due_date' => '2022-01-31',
+            'private_notes' => 'super secret',
+            'public_notes' => 'public notes',
+            'custom_value1' => 'custom value 1',
+            'custom_value2' => 'custom value 2',
+            'line_items' => [
+              [
+                    'quantity' => 1,
+                    'cost' => 14,
+                    'product_key' => 'sku_4_u',
+                    'notes' => 'The actual product description',
+                    'discount' => 0,
+                    'is_amount_discount' => true,
+                    'tax_name1' => '',
+                    'tax_rate1' => 0,
+                    'tax_name2' => '',
+                    'tax_rate2' => 0,
+                    'tax_name3' => '',
+                    'tax_rate3' => 0,
+                    'sort_id' => '0',
+                    'custom_value1' => 'https://picsum.photos/200',
+                    'custom_value2' => '94',
+                    'custom_value3' => 'Alias vel eveniet.',
+                    'custom_value4' => 'Iusto aut quis qui.',
+                    'type_id' => '1',
+                    'tax_id' => '1'
+              ]
+            ]
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl --request POST \
+            --url 'https://invoicing.co/api/v1/invoices' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' \
+            --data '{
+              "client_id": "AxP7K9nY5z",
+              "date": "2022-01-01",
+              "due_date": "2022-01-31",
+              "private_notes": "super secret",
+              "public_notes": "public notes",
+              "custom_value1": "custom value 1",
+              "custom_value2": "custom value 2",
+              "line_items": [
+                {
+                  "quantity": 1,
+                  "cost": 14,
+                  "product_key": "sku_4_u",
+                  "notes": "The actual product description",
+                  "discount": 0,
+                  "is_amount_discount": true,
+                  "tax_name1": "",
+                  "tax_rate1": 0,
+                  "tax_name2": "",
+                  "tax_rate2": 0,
+                  "tax_name3": "",
+                  "tax_rate3": 0,
+                  "sort_id": "0",
+                  "custom_value1": "https://picsum.photos/200",
+                  "custom_value2": "94",
+                  "custom_value3": "Alias vel eveniet.",
+                  "custom_value4": "Iusto aut quis qui.",
+                  "type_id": "1",
+                  "tax_id": "1"
+                }
+              ]
+            }'
       operationId: storeInvoice
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -11365,7 +11484,23 @@ paths:
       tags:
         - invoices
       summary: "Show invoice"
-      description: "Displays an invoice by id"
+      description: |
+        ## GET /api/v1/invoices/{id}
+
+        Displays an invoice by id
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->get("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://invoicing.co/api/v1/invoices/D2J234DFA' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       operationId: showInvoice
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -11411,6 +11546,7 @@ paths:
         - invoices
       summary: "Update invoice"
       description: |
+        ## PUT /api/v1/invoices/{id}
         Handles the updating of an invoice by id.
 
         Triggered actions are available when updating or creating an invoice.  
@@ -11424,8 +11560,47 @@ paths:
           ?cancel=true [Saves and marks the invoice as cancelled]
           ?save_default_footer=true [Saves the current footer as the default footer]
           ?save_default_terms=true [Saves the current terms as the default terms]
+          ?retry_e_send=true [Saves and retries the e-send for the invoice]
+          ?redirect=https://example.com [Saves and redirects to the given url]
           ```
 
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->update("D2J234DFA", [
+            'date' => '2022-01-01',
+            'due_date' => '2022-01-31',
+            'private_notes' => 'super secret',
+            'public_notes' => 'public notes',
+            'line_items' => [
+              [
+                'product_key' => 'sku_4_u',
+                'notes' => 'The actual product description',
+              ]
+            ]
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl --request PUT \
+            --url 'https://invoicing.co/api/v1/invoices/D2J234DFA' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' \
+            --data '{
+              "date": "2022-01-01",
+              "due_date": "2022-01-31",
+              "private_notes": "super secret",
+              "public_notes": "public notes",
+              "line_items": [
+                {
+                  "product_key": "sku_4_u",
+                  "notes": "The actual product description"
+                }
+              ]
+            }'
       operationId: updateInvoice
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -11469,7 +11644,24 @@ paths:
       tags:
         - invoices
       summary: "Delete invoice"
-      description: "Handles the deletion of an invoice by id"
+      description: |
+        ## DELETE /api/v1/invoices/{id}
+
+        Handles the deletion of an invoice by id.
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $ninja->invoices->delete("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request DELETE \
+            --url 'https://invoicing.co/api/v1/invoices/D2J234DFA' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       operationId: deleteInvoice
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -11510,7 +11702,24 @@ paths:
       tags:
         - invoices
       summary: "Edit invoice"
-      description: "Displays an invoice by id for editting"
+      description: |
+        ## GET /api/v1/invoices/{id}/edit
+
+        Displays an invoice by id for editting
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->show("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://invoicing.co/api/v1/invoices/D2J234DFA/edit' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       operationId: editInvoice
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -11556,12 +11765,24 @@ paths:
       tags:
         - invoices
       summary: "Blank invoice"
-      description: "Returns a blank object with default values"
-      operationId: getInvoicesCreate
-      parameters:
-        - $ref: "#/components/parameters/X-API-TOKEN"
-        - $ref: "#/components/parameters/X-Requested-With"
-        - $ref: "#/components/parameters/include"
+      description: |
+        ## GET /api/v1/invoices/create
+
+        Returns a blank object with default values
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->model();
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://invoicing.co/api/v1/invoices/create' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       responses:
         200:
           description: "A blank invoice object"
@@ -11595,6 +11816,8 @@ paths:
         - invoices
       summary: "Bulk invoice actions"
       description: |
+        ## POST /api/v1/invoices/bulk
+
         There are multiple actions that are available including:  
 
       operationId: bulkInvoices
@@ -11602,6 +11825,27 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/index"
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $response = $ninja->invoices->bulk([
+            'action' => 'bulk_download',
+            'ids' => ['D2J234DFA','D2J234DFA','D2J234DFA']
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl --request POST \
+            --url 'https://invoicing.co/api/v1/invoices/bulk' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' \
+            --data '{
+              "action": "bulk_download",
+              "ids": ["D2J234DFA","D2J234DFA","D2J234DFA"]
+            }'
       requestBody:
         description: "Bulk action details"
         required: true
@@ -11763,8 +12007,24 @@ paths:
       tags:
         - invoices
       summary: "Download invoice PDF"
-      description: "Downloads a specific invoice"
-      operationId: downloadInvoice
+      description: |
+        ## GET /api/v1/invoice/{invitation_key}/download
+
+        Downloads a specific invoice
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->download("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://invoicing.co/api/v1/invoice/D2J234DFA/download' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
@@ -11804,8 +12064,24 @@ paths:
       tags:
         - invoices
       summary: "Download delivery note"
-      description: "Downloads a specific invoice delivery notes"
-      operationId: deliveryNote
+      description: |
+        ## GET /api/v1/invoices/{id}/delivery_note
+
+        Downloads a specific invoice delivery notes
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->deliveryNote("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://invoicing.co/api/v1/invoices/D2J234DFA/delivery_note' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
@@ -11845,8 +12121,24 @@ paths:
       tags:
         - invoices
       summary: "Add invoice document"
-      description: "Handles the uploading of a document to a invoice"
-      operationId: uploadInvoice
+      description: |
+        ## POST /api/v1/invoices/{id}/upload
+
+        Handles the uploading of a document to a invoice
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoice = $ninja->invoices->upload("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request POST \
+            --url 'https://invoicing.co/api/v1/invoices/D2J234DFA/upload' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
@@ -14948,13 +15240,7 @@ paths:
         - products
       summary: "List products"
       x-codeSamples:
-      - lang: curl
-        label: Curl
-        source: |
-          curl -X GET 'https://invoicing.co/api/v1/products?filter=search&per_page=20&page=1&include=documents' \
-          -H "X-API-TOKEN:company-token-test" \
-          -H "X-Requested-With: XMLHttpRequest";
-      - lang: go
+      - lang: php
         label: PHP
         source: |
           $ninja = new InvoiceNinja("your_token");
@@ -14964,7 +15250,15 @@ paths:
             'page' => 1,
             'include' => 'documents'
           ]);
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET 'https://invoicing.co/api/v1/products?filter=search&per_page=20&page=1&include=documents' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      
       description: |
+        ##  GET /api/v1/products
         Lists products within your company.
         
         You can search and filter the result set using query parameters. These can be chained together allowing fine grained lists to be generated.    
@@ -15041,15 +15335,7 @@ paths:
         - products
       summary: "Create Product"
       x-codeSamples:
-      - lang: curl
-        label: Curl
-        source: |
-          curl -X POST 'https://invoicing.co/api/v1/products' \
-          -H "X-API-TOKEN:company-token-test" \
-          -H "Content-Type:application/json" \
-          -d '{"product_key":"sku_1","notes":"product description","cost":1,"price":10}' \
-          -H "X-Requested-With: XMLHttpRequest";
-      - lang: go
+      - lang: php
         label: PHP
         source: |
           $ninja = new InvoiceNinja("your_token");
@@ -15059,7 +15345,18 @@ paths:
             'cost' => 1,
             'price' => 10
           ]);
-      description: "Adds a product to a company"
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X POST 'https://invoicing.co/api/v1/products' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "Content-Type:application/json" \
+          -d '{"product_key":"sku_1","notes":"product description","cost":1,"price":10}' \
+          -H "X-Requested-With: XMLHttpRequest";
+      
+      description: |
+        ##  POST /api/v1/products
+        Adds a product to a company
       operationId: storeProduct
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15104,18 +15401,21 @@ paths:
         - products
       summary: "Show product"
       x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->show("{id}");
       - lang: curl
         label: Curl
         source: |
           curl -X GET 'https://invoicing.co/api/v1/products/{id}' \
           -H "X-API-TOKEN:company-token-test" \
           -H "X-Requested-With: XMLHttpRequest";
-      - lang: php
-        label: PHP
-        source: |
-          $ninja = new InvoiceNinja("your_token");
-          $product = $ninja->products->get("{id}");
-      description: "Displays a product by id"
+      
+      description: |
+        ##  GET /api/v1/products/{id}
+        Displays a product by id
       operationId: showProduct
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15160,6 +15460,15 @@ paths:
         - products
       summary: "Update product"
       x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->update("id", [
+            "name" => "Updated Product",
+            "price" => 150.0,
+            "description" => "An updated description of the product"
+          ]);
       - lang: curl
         label: Curl
         source: |
@@ -15171,16 +15480,10 @@ paths:
             "price": 150.0,
             "notes": "An updated description of the product"
           }'
-      - lang: go
-        label: PHP
-        source: |
-          $ninja = new InvoiceNinja("your_token");
-          $product = $ninja->products->update("id", [
-            "name" => "Updated Product",
-            "price" => 150.0,
-            "description" => "An updated description of the product"
-          ]);
-      description: "Handles the updating of a product by id"
+      
+      description: |
+        ##  PUT /api/v1/products/{id}
+        Handles the updating of a product by id
       operationId: updateProduct
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15231,19 +15534,25 @@ paths:
       tags:
         - products
       summary: "Delete product"
+      description: |
+        ##  DELETE /api/v1/products/{id}
+        Handles the deletion of a product by id
       x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $ninja->products->bulk([
+              'action' => 'delete',
+              'ids' => ['productId1', 'productId2']
+          ]);
       - lang: curl
         label: Curl
         source: |
           curl -X DELETE 'https://invoicing.co/api/v1/products/{id}' \
           -H "X-API-TOKEN:company-token-test" \
           -H "X-Requested-With: XMLHttpRequest";
-      - lang: go
-        label: PHP
-        source: |
-          $ninja = new InvoiceNinja("your_token");
-          $ninja->products->bulk("delete", "id");
-      description: "Handles the deletion of a product by id"
+      
       operationId: deleteProduct
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15285,18 +15594,21 @@ paths:
         - products
       summary: "Edit product"
       x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->show("{id}");
       - lang: curl
         label: Curl
         source: |
           curl -X GET 'https://invoicing.co/api/v1/products/{id}/edit' \
           -H "X-API-TOKEN:company-token-test" \
           -H "X-Requested-With: XMLHttpRequest";
-      - lang: php
-        label: PHP
-        source: |
-          $ninja = new InvoiceNinja("your_token");
-          $product = $ninja->products->get("{id}");
-      description: "Displays an Product by id"
+      
+      description: |
+        ##  GET /api/v1/products/{id}/edit
+        Displays an Product by id
       operationId: editProduct
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15341,7 +15653,22 @@ paths:
       tags:
         - products
       summary: "Blank product"
-      description: "Returns a blank product object with default values"
+      x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->model();
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X GET 'https://invoicing.co/api/v1/products/create' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      
+      description: |
+        ##  GET /api/v1/products/create
+        Returns a blank product object with default values
       operationId: getProductsCreate
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15380,6 +15707,14 @@ paths:
         - products
       summary: "Bulk product actions"
       x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->bulk([
+              'action' => 'archive',
+              'ids' => ['productId1', 'productId2']
+          ]);
       - lang: curl
         label: Curl
         source: |
@@ -15388,12 +15723,10 @@ paths:
           -d '{"action":"archive","ids":["id","id2"]}' \
           -H "X-API-TOKEN:company-token-test" \
           -H "X-Requested-With: XMLHttpRequest";
-      - lang: php
-        label: PHP
-        source: |
-          $ninja = new InvoiceNinja("your_token");
-          $product = $ninja->products->bulk("action", ["id","id2"]);
-      description: "Archive / Restore / Delete  / Set tax id in bulk"
+      
+      description: |
+        ##  POST /api/v1/products/bulk
+        Archive / Restore / Delete  / Set tax id in bulk
       operationId: bulkProducts
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15438,7 +15771,21 @@ paths:
       tags:
         - products
       summary: "Add product document"
-      description: "Handles the uploading of a document to a product"
+      x-codeSamples:
+      - lang: php
+        label: PHP
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $product = $ninja->products->upload("id", "document");
+      - lang: curl
+        label: Curl
+        source: |
+          curl -X POST 'https://invoicing.co/api/v1/products/{id}/upload' \
+          -H "X-API-TOKEN:company-token-test" \
+          -H "X-Requested-With: XMLHttpRequest";
+      description: |
+        ##  POST /api/v1/products/{id}/upload
+        Handles the uploading of a document to a product"
       operationId: uploadProduct
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -17618,101 +17965,85 @@ components:
       required:
         - client_id        
       properties:
-        id:
-          description: 'The invoice hashed id'
-          type: string
-          example: Opnel5aKBz
-          readOnly: true
         user_id:
           description: 'The user hashed id'
           type: string
-          example: Opnel5aKBz
+          example: 'AxP7K9nY5z'
         assigned_user_id:
           description: 'The assigned user hashed id'
           type: string
-          example: Opnel5aKBz
+          example: 'Bw2M8vR4qL'
         client_id:
           description: 'The client hashed id'
           type: string
-          example: Opnel5aKBz
-        status_id:
-          description: 'The invoice status variable'
-          type: string
-          example: '4'
-          readOnly: true
+          example: 'Ht5N9cX3jK'
         number:
           description: 'The invoice number - is a unique alpha numeric number per invoice per company'
           type: string
-          example: INV_101
+          example: 'INV-2024-0001'
         po_number:
           description: 'The purchase order associated with this invoice'
           type: string
-          example: PO-1234
+          example: 'PO-2024-0123'
         terms:
           description: 'The invoice terms'
           type: string
-          example: 'These are invoice terms'
+          example: 'Net 30 - Payment is due within 30 days of invoice date'
         public_notes:
           description: 'The public notes of the invoice'
           type: string
-          example: 'These are some public notes'
+          example: 'Thank you for your business. Please include invoice number with payment.'
         private_notes:
           description: 'The private notes of the invoice'
           type: string
-          example: 'These are some private notes'
+          example: 'Client requested expedited delivery - premium rates apply'
         footer:
           description: 'The invoice footer notes'
           type: string
-          example: ''
+          example: 'Payment accepted via bank transfer or credit card'
         custom_value1:
           description: 'A custom field value'
           type: string
-          example: '2022-10-01'
+          example: 'Department: Sales'
         custom_value2:
           description: 'A custom field value'
           type: string
-          example: 'Something custom'
+          example: 'Region: North America'
         custom_value3:
           description: 'A custom field value'
           type: string
-          example: ''
+          example: 'Contract: C-2024-156'
         custom_value4:
           description: 'A custom field value'
           type: string
-          example: ''
+          example: 'Priority: High'
         tax_name1:
           description: 'The tax name'
           type: string
-          example: ''
+          example: 'VAT'
         tax_name2:
           description: 'The tax name'
           type: string
-          example: ''
+          example: 'GST'
         tax_rate1:
           description: 'The tax rate'
           type: number
           format: float
-          example: '10.00'
+          example: 20.00
         tax_rate2:
           description: 'The tax rate'
           type: number
           format: float
-          example: '10.00'
+          example: 5.00
         tax_name3:
           description: 'The tax name'
           type: string
-          example: ''
+          example: 'State Tax'
         tax_rate3:
           description: 'The tax rate'
           type: number
           format: float
-          example: '10.00'
-        total_taxes:
-          description: 'The total taxes for the invoice'
-          type: number
-          format: float
-          example: '10.00'
-          readOnly: true
+          example: 8.50
         line_items:
           type: array
           description: 'An array of objects which define the line items of the invoice'
@@ -17723,43 +18054,20 @@ components:
           description: 'An array of objects which define the invitations of the invoice'
           items:
             $ref: '#/components/schemas/InvoiceInvitationRequest'
-        amount:
-          description: 'The invoice amount'
-          type: number
-          format: float
-          example: '10.00'
-          readOnly: true
-        balance:
-          description: 'The invoice balance'
-          type: number
-          format: float
-          example: '10.00'
-          readOnly: true
-        paid_to_date:
-          description: 'The amount paid on the invoice to date'
-          type: number
-          format: float
-          example: '10.00'
-          readOnly: true
         discount:
           description: 'The invoice discount, can be an amount or a percentage'
           type: number
           format: float
-          example: '10.00'
+          example: 15.00
         partial:
           description: 'The deposit/partial amount'
           type: number
           format: float
-          example: '10.00'
+          example: 250.00
         is_amount_discount:
           description: 'Flag determining if the discount is an amount or a percentage'
           type: boolean
           example: true
-        is_deleted:
-          description: 'Defines if the invoice has been deleted'
-          type: boolean
-          example: true
-          readOnly: true
         uses_inclusive_taxes:
           description: 'Defines the type of taxes used as either inclusive or exclusive'
           type: boolean
@@ -17768,67 +18076,37 @@ components:
           description: 'The Invoice Date'
           type: string
           format: date
-          example: '1994-07-30'
-        last_sent_date:
-          description: 'The last date the invoice was sent out'
-          type: string
-          format: date
-          example: '1994-07-30'
-          readOnly: true
-        next_send_date:
-          description: 'The Next date for a reminder to be sent'
-          type: string
-          format: date
-          example: '1994-07-30'
-          readOnly: true
+          example: '2024-03-15'
         partial_due_date:
           description: 'The due date for the deposit/partial amount'
           type: string
           format: date
-          example: '1994-07-30'
+          example: '2024-03-29'
         due_date:
           description: 'The due date of the invoice'
           type: string
           format: date
-          example: '1994-07-30'
-        last_viewed:
-          description: Timestamp
-          type: number
-          format: integer
-          example: '1434342123'
-          readOnly: true
-        updated_at:
-          description: Timestamp
-          type: number
-          format: integer
-          example: '1434342123'
-          readOnly: true
-        archived_at:
-          description: Timestamp
-          type: number
-          format: integer
-          example: '1434342123'
-          readOnly: true
+          example: '2024-04-14'
         custom_surcharge1:
           description: 'First Custom Surcharge'
           type: number
           format: float
-          example: '10.00'
+          example: 25.00
         custom_surcharge2:
           description: 'Second Custom Surcharge'
           type: number
           format: float
-          example: '10.00'
+          example: 35.00
         custom_surcharge3:
           description: 'Third Custom Surcharge'
           type: number
           format: float
-          example: '10.00'
+          example: 45.00
         custom_surcharge4:
           description: 'Fourth Custom Surcharge'
           type: number
           format: float
-          example: '10.00'
+          example: 55.00
         custom_surcharge_tax1:
           description: 'Toggles charging taxes on custom surcharge amounts'
           type: boolean
@@ -17853,11 +18131,7 @@ components:
     ProductRequest:
       type: object
       properties:
-        id:
-          type: string
-          description: 'The hashed product ID.'
-          example: eP01N
-          readOnly: true
+       
         assigned_user_id:
           type: string
           description: 'The hashed ID of the user assigned to this product.'
@@ -17924,35 +18198,35 @@ components:
           default: 1
         tax_name1:
           type: string
-          description: 'The name of tax 1.'
+          description: 'The default tax name associated with this product'
           example: 'Tax 1'
 
         tax_rate1:
           type: number
           format: double
-          description: 'The rate of tax 1.'
+          description: 'The default tax rate for this product'
           example: 10.0
 
         tax_name2:
           type: string
-          description: 'The name of tax 2.'
+          description: 'The default tax name associated with this product'
           example: 'Tax 2'
 
         tax_rate2:
           type: number
           format: double
-          description: 'The rate of tax 2.'
+          description: 'The default tax rate for this product'
           example: 5.0
 
         tax_name3:
           type: string
-          description: 'The name of tax 3.'
+          description: 'The default tax name associated with this product'
           example: 'Tax 3'
 
         tax_rate3:
           type: number
           format: double
-          description: 'The rate of tax 3.'
+          description: 'The default tax rate for this product'
           example: 0.0
 
         in_stock_quantity:
