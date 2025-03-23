@@ -9109,26 +9109,43 @@ paths:
       tags:
         - locations
       summary: 'List locations'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("your_token");
+          $invoices = $ninja->locations->all([]);
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://demo.invoiceninja.com/api/v1/locations?per_page=10&page=1&sort=name&sort_dir=asc' \
+            --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
+            --header 'Accept: application/json'
       description: |
-            When retrieving a list of locations you can chain query parameters to filter the dataset. For example:
-            
-            ```
-            /api/v1/locations?name=warehouse*
-            ```
-            
-            You can also sort the results:
-            
-            ```
-            /api/v1/locations?sort=name|desc
-            ```
+        ##  GET /api/v1/locations
 
-            For pagination, use per_page and page parameters:
-            
-            ```
-            /api/v1/locations?per_page=15&page=2
-            ```
+        Locations are additional addresses that are applicable to a client. This is useful when a client has multiple addresses for shipping, billing, etc.
 
-            The default per_page value is 20.
+        When retrieving a list of locations you can chain query parameters to filter the dataset. For example:
+        
+        ```html
+        /api/v1/locations?name=warehouse*
+        ```
+        
+        You can also sort the results:
+        
+        ```html
+        /api/v1/locations?sort=name|desc
+        ```
+
+        For pagination, use per_page and page parameters:
+        
+        ```html
+        /api/v1/locations?per_page=15&page=2
+        ```
+
+        The default per_page value is 20.
       operationId: getLocations
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -9171,7 +9188,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Location'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Location'
         401:
           $ref: '#/components/responses/401'
         403:
@@ -9187,7 +9209,10 @@ paths:
       tags:
         - locations
       summary: 'Create location'
-      description: 'Adds a location to a company'
+      description: |
+        ##  POST /api/v1/locations
+
+        Adds a location to a company
       x-codeSamples:
         - lang: php
           label: php
@@ -9277,7 +9302,10 @@ paths:
       tags:
         - locations
       summary: 'Show location'
-      description: 'Displays a location by id'
+      description: |
+        ##  GET /api/v1/locations/{id}
+
+        Displays a location by id
       operationId: showLocation
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -9315,12 +9343,28 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $location = $ninja->locations->show("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://demo.invoiceninja.com/api/v1/locations/D2J234DFA' \
+            --header 'X-API-TOKEN: YOUR-TOKEN' \
+            --header 'Accept: application/json'
 
     put:
       tags:
         - locations
       summary: 'Update location'
-      description: 'Handles the updating of a location by id'
+      description: |
+        ##  PUT /api/v1/locations/{id}
+
+        Handles the updating of a location by id
       operationId: updateLocation
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -9365,12 +9409,37 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $location = $ninja->locations->update("D2J234DFA", [
+              'name' => 'Updated Location Name',
+              'address1' => '456 New Street',
+              'city' => 'Los Angeles'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X PUT https://demo.invoiceninja.com/api/v1/locations/D2J234DFA \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "name": "Updated Location Name",
+              "address1": "456 New Street",
+              "city": "Los Angeles"
+            }'
 
     delete:
       tags:
         - locations
       summary: 'Delete location'
-      description: 'Handles the deletion of a location by id'
+      description: |
+        ##  DELETE /api/v1/locations/{id}
+
+        Handles the deletion of a location by id
       operationId: deleteLocation
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -9403,13 +9472,29 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $ninja->locations->delete("D2J234DFA");
+      - lang: curl
+        label: curl
+        source: |
+          curl -X DELETE \
+            --url 'https://demo.invoiceninja.com/api/v1/locations/D2J234DFA' \
+            --header 'X-API-TOKEN: YOUR-TOKEN' \
+            --header 'Accept: application/json'
 
   /api/v1/locations/create:
     get:
       tags:
         - locations
       summary: 'Blank Location'
-      description: 'Returns a blank object with default values'
+      description: |
+        ##  GET /api/v1/locations/create
+
+        Returns a blank object with default values
       operationId: getLocationsCreate
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -9439,6 +9524,19 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $location = $ninja->locations->model();
+      - lang: curl
+        label: curl
+        source: |
+          curl --request GET \
+            --url 'https://demo.invoiceninja.com/api/v1/locations/create' \
+            --header 'X-API-TOKEN: YOUR-TOKEN' \
+            --header 'Accept: application/json'
 
   /api/v1/locations/bulk:
     post:
@@ -9446,6 +9544,8 @@ paths:
         - locations
       summary: 'Bulk location actions'
       description: |
+        ##  POST /api/v1/locations/bulk
+
         Bulk actions allow to make changes to multiple locations in a single request. The following actions are supported:
         
         - archive
@@ -9455,6 +9555,26 @@ paths:
         All of these actions require an array of location ids to perform the requested action on ie.
 
         "ids":['id1','id2']
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $ninja->locations->bulk([
+              'action' => 'archive',
+              'ids' => ['locationId1', 'locationId2']
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X POST https://demo.invoiceninja.com/api/v1/locations/bulk \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "action": "archive",
+              "ids": ["locationId1", "locationId2"]
+            }'
       operationId: bulkLocations
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -9491,6 +9611,7 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
+    
   /api/v1/recurring_invoices:
     get:
       tags:
@@ -13162,7 +13283,8 @@ paths:
     get:
       tags:
         - clients
-      summary: 'List clients'
+      summary: |
+        List clients
       x-codeSamples:
       - lang: php
         label: php
@@ -13182,6 +13304,7 @@ paths:
             --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
             --header 'Accept: application/json'
       description: |
+            ##  GET /api/v1/clients  
             When retrieving a list of clients you can also chain query parameters in order to filter the dataset that is returned. For example, you can send a request to the following URL to retrieve clients that have a balance greater than 1000
               
             ```
@@ -13394,10 +13517,12 @@ paths:
         - clients
       summary: 'Create client'
       description: |
-            Adds a client to a company
-              
-            > 🚨 Important    
-            When creating (or updating) a client you must include the child contacts with all mutating requests. Client contacts cannot be modified in isolation.
+
+        ##  POST /api/v1/clients  
+        Adds a client to a company
+          
+        > 🚨 Important    
+        When creating (or updating) a client you must include the child contacts with all mutating requests. Client contacts cannot be modified in isolation.
       x-codeSamples:
         - lang: php
           label: php
@@ -13434,7 +13559,8 @@ paths:
                     "first_name": "John",
                     "last_name": "Smith",
                     "email": "john@example.com",
-                    "phone": "555-0123"
+                    "phone": "555-0123",
+                    "send_email": true
                   }
                 ],
                 "address1": "123 Main St",
@@ -13484,7 +13610,11 @@ paths:
       tags:
         - clients
       summary: 'Show client'
-      description: 'Displays a client by id'
+      description: |
+        ##  GET /api/v1/clients/{id}
+
+        Displays a client by id
+
       x-codeSamples:
       - lang: php
         label: php
@@ -13541,6 +13671,8 @@ paths:
         - clients
       summary: 'Update client'
       description: |
+        ##  PUT /api/v1/clients/{id}
+
         Handles the updating of a client by id
 
         > 🚨 Important    
@@ -13629,12 +13761,17 @@ paths:
         - clients
       summary: 'Delete client'
       description: |
+        ##  DELETE /api/v1/clients/{id}
+
         Handles the deletion of a client by id
 
         > ❗ Note
         Deleting a client does not purge the client from the system. The delete action will remove the clients data from all 
-        views in the application but keep it all on file. A Client can be later restored reversing this action.  To permanently wipe a client and
-        all of their records from the system, use the [/purge route](#tag/clients/POST/api~1v1~1clients~1{id}~1purge)
+        views in the application but keep it on file in case it needs to be restored.
+        
+        A Client can be later restored reversing this action.  
+        
+        To permanently wipe a client and all of their records from the system, use the [/purge route](/#tag/clients/POST/api/v1/clients/{id}/purge)
 
       x-codeSamples:
       - lang: php
@@ -13688,7 +13825,21 @@ paths:
       tags:
         - clients
       summary: 'Edit Client'
-      description: 'Displays a client by id, essentially an alias of the show route'
+      description: |
+        ##  GET /api/v1/clients/{id}/edit
+        Displays a client by id, essentially an alias of the show route
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $client = $ninja->clients->show('clientId123');
+      - lang: curl
+        label: php
+        source: |
+          curl -X GET https://demo.invoiceninja.com/api/v1/clients/clientId123 \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "X-Requested-With: XMLHttpRequest"
       operationId: editClient
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -13732,7 +13883,23 @@ paths:
       tags:
         - clients
       summary: 'Blank Client'
-      description: 'Returns a blank object with default values'
+      description: |
+        ##  GET /api/v1/clients/create  
+
+        Returns a blank object with default values
+
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $client = $ninja->clients->model();
+      - lang: curl
+        label: php
+        source: |
+          curl -X GET https://demo.invoiceninja.com/api/v1/clients/create \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "X-Requested-With: XMLHttpRequest"
       operationId: getClientsCreate
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -13769,6 +13936,8 @@ paths:
         - clients
       summary: 'Bulk client actions'
       description: |
+        ##  POST /api/v1/clients/bulk
+
         Bulk actions allow to make changes to multiple clients in a single request the following actions are supported
         
         - archive
@@ -13776,7 +13945,7 @@ paths:
         - delete
         - template _requires template,template_id properties also_
         - assign_group _requires group_settings_id also_
-        - bulk_update _ requires column,new_value also_
+        - bulk_update _requires column,new_value also_
 
         All of these actions require an array of client ids to perform the requested action on ie.
 
@@ -13790,7 +13959,7 @@ paths:
 
         - assign_group
         
-        Allows the setting of multiple clients to a single group
+        Allows setting multiple clients to a single group
 
         - bulk_update
 
@@ -13868,7 +14037,11 @@ paths:
       tags:
         - clients
       summary: 'Add client document'
-      description: 'Handles the uploading of a document to a client, please note due to a quirk in REST you will need to use a _method parameter with value of POST'
+      description: |
+        ##  POST /api/v1/clients/{id}/upload
+
+        Handles the uploading of a document to a client, please note due to a quirk in REST you will need to use a _method parameter with value of POST
+
       x-codeSamples:
       - lang: php
         label: php
@@ -13956,11 +14129,13 @@ paths:
         - clients
       summary: 'Purge client'
       description: |
-            Handles purging a client.
+        ##  POST /api/v1/clients/{id}/purge
 
-            > ❗ Note
-            This is a destructive action.
-            This action will remove all data associated with the client and cannot be undone.
+        Handles purging a client.
+
+        > ❗ Note
+        This is a destructive action.
+        This action will remove all data associated with the client and cannot be undone.
       x-codeSamples:
       - lang: php
         label: php
@@ -14014,15 +14189,17 @@ paths:
         - clients
       summary: 'Merge client'
       description: |
-            Handles merging 2 clients
+        ##  POST /api/v1/clients/{id}/{mergeable_client_hashed_id}/merge
 
-            The id parameter is the client that will be the primary client after the merge has completed. 
+        Handles merging 2 clients
 
-            The mergeable_client_hashed_id is the client that will be merged into the primary client, this clients records will be updated and associated with the primary client.
+        The id parameter is the client that will be the primary client after the merge has completed. 
 
-            > 🚨 **Important**    
-            This action requires elevated permissions, please note the X-API-PASSWORD header requirements for this route.
-            
+        The mergeable_client_hashed_id is the client that will be merged into the primary client, this clients records will be updated and associated with the primary client.
+
+        > 🚨 **Important**    
+        This action requires elevated permissions, please note the X-API-PASSWORD header requirements for this route.
+        
       x-codeSamples:
       - lang: php
         label: php
@@ -14084,7 +14261,11 @@ paths:
       tags:
         - clients
       summary: 'Client statement PDF'
-      description: 'Return a PDF of the client statement'
+      description: |
+        ##  POST /api/v1/client_statement
+
+        Return a PDF of the client statement
+
       operationId: clientStatement
       x-codeSamples:
       - lang: php
@@ -14174,7 +14355,11 @@ paths:
       tags:
         - clients
       summary: 'Removes email suppression of a user in the system'
-      description: 'Emails are suppressed by PostMark, when they receive a Hard bounce / Spam Complaint. This endpoint allows you to remove the suppression and send emails to the user again.'
+      description: |
+        ##  POST /api/v1/reactivate_email/{bounce_id}
+
+        Emails are suppressed by PostMark, when they receive a Hard bounce / Spam Complaint. This endpoint allows you to remove the suppression and send emails to the user again.
+
       operationId: reactivateEmail
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -14218,7 +14403,11 @@ paths:
       tags:
         - clients
       summary: 'Update tax data'
-      description: 'Updates the clients tax data - if their address has changed'
+      description: |
+        ##  POST /api/v1/clients/{client}/updateTaxData
+
+        Updates the clients tax data - if their address has changed
+
       operationId: updateClientTaxData
       parameters:
         - $ref: '#/components/parameters/X-API-TOKEN'
@@ -21751,39 +21940,39 @@ components:
         first_name:
           description: 'The first name of the contact'
           type: string
-          example: John
+          example: Sarah
         last_name:
           description: 'The last name of the contact'
           type: string
-          example: Doe
+          example: Johnson
         phone:
           description: 'The phone number of the contact'
           type: string
-          example: 555-152-4524
+          example: '+1-555-123-4567'
         custom_value1:
           description: 'A Custom field value'
           type: string
-          example: ''
+          example: 'Preferred Customer'
         custom_value2:
           description: 'A Custom field value'
           type: string
-          example: ''
+          example: 'West Region'
         custom_value3:
           description: 'A Custom field value'
           type: string
-          example: ''
+          example: 'Referral: Jane Smith'
         custom_value4:
           description: 'A Custom field value'
           type: string
-          example: ''
+          example: 'Account #12345'
         email:
           description: 'The email of the contact'
           type: string
-          example: ''
+          example: 'sarah.johnson@example.com'
         password:
           description: 'The hashed password of the contact'
           type: string
-          example: '*****'
+          example: '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'
         send_email:
           description: 'Boolean flag that determines if this contact should receive emails'
           type: boolean
