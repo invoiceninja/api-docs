@@ -20193,26 +20193,6 @@ components:
           example: PAY_101
       type: object
     
-    PaymentType:
-      type: object
-      properties:
-        id:
-          description: 'The payment type id'
-          type: string
-          example: '1'
-        name:
-          description: 'The payment type name'
-          type: string
-          example: 'Credit Card'
-        gateway_type_id:
-          description: 'The gateway type id'
-          type: string
-          example: '1'
-      example:
-        id: '1'
-        name: 'Credit Card'
-        gateway_type_id: '1'
-    
     Credit:
       properties:
         id:
