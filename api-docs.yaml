@@ -8711,6 +8711,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: "Credit data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRequest'
       responses:
         200:
           description: "Returns the saved credit object"
@@ -8803,6 +8810,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "Credit data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditRequest'
       responses:
         200:
           description: "Returns the Credit object"
@@ -10397,6 +10411,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: "Task data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
       responses:
         200:
           description: "Returns the saved task object"
@@ -10486,6 +10507,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "Task data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
       responses:
         200:
           description: "Returns the task object"
@@ -11008,6 +11036,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: "Quote data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
       responses:
         200:
           description: "Returns the saved Quote object"
@@ -12737,6 +12772,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: "Project data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
       responses:
         200:
           description: "Returns the saved project object"
@@ -12826,6 +12868,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "Project data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
       responses:
         200:
           description: "Returns the project object"
@@ -13148,6 +13197,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: "Vendor data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequest'
       responses:
         200:
           description: "Returns the saved clivendorent object"
@@ -13237,6 +13293,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "Vendor data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequest'
       responses:
         200:
           description: "Returns the vendor object"
@@ -15320,6 +15383,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: "Purchase order data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderRequest'
       responses:
         200:
           description: "Returns the saved purchase order object"
@@ -15411,6 +15481,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: "Purchase order data"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderRequest'
       responses:
         200:
           description: "Returns the purchase order object"
@@ -17872,6 +17949,65 @@ components:
           type: object
           description: 'The pagination links'
           readOnly: true
+TaskRequest:
+  properties:
+    client_id:
+      description: 'The hashed id of the client'
+      type: string
+      example: Opnel5aKBz
+    project_id:
+      description: 'The hashed id of the project associated with the task'
+      type: string
+      example: Opnel5aKBz
+    assigned_user_id:
+      description: 'The assigned user of the task'
+      type: string
+      example: Opnel5aKBz
+    description:
+      description: 'The task description'
+      type: string
+      example: 'A wonderful task to work on'
+    time_log:
+      description: 'An array of unix time stamps defining the start and end times of the task'
+      type: string
+      example: '[[1,2],[3,4]]'
+    is_running:
+      description: 'Determines if the task is still running'
+      type: boolean
+      example: true
+    task_status_id:
+      description: 'The hashed id of the task status'
+      type: string
+      example: Opnel5aKBz
+    rate:
+      description: 'The task rate'
+      type: number
+      example: 10.00
+    custom_value1:
+      description: 'A custom value'
+      type: string
+      example: '2022-10-10'
+    custom_value2:
+      description: 'A custom value'
+      type: string
+      example: '$1100'
+    custom_value3:
+      description: 'A custom value'
+      type: string
+      example: 'I need help'
+    custom_value4:
+      description: 'A custom value'
+      type: string
+      example: 'INV-3343'
+    is_date_based:
+      description: 'Boolean flag determining if the task is date based'
+      type: boolean
+      example: true
+    invoice_documents:
+      description: "Boolean flag which determines whether to include the task documents on the invoice"
+      type: boolean
+      example: true
+  type: object 
     LocationRequest:
       properties:
         name:
@@ -17935,6 +18071,158 @@ components:
           type: string
           example: Opnel5aKBz
       type: object 
+QuoteRequest:
+  properties:
+    client_id:
+      description: 'The unique hashed identifier for the client associated with the quote'
+      type: string
+      example: Opnel5aKBz
+    assigned_user_id:
+      description: 'The unique hashed identifier for the user assigned to the quote'
+      type: string
+      example: Opnel5aKBz
+    number:
+      description: 'The unique alpha-numeric quote number for the quote per company'
+      type: string
+      example: 'QUO-001'
+    po_number:
+      description: 'The purchase order number associated with the quote'
+      type: string
+      example: 'PO-1234'
+    terms:
+      description: 'The terms and conditions for the quote'
+      type: string
+      example: 'These are some quote terms. Valid for 14 days.'
+    public_notes:
+      description: 'Publicly visible notes associated with the quote'
+      type: string
+      example: 'These are public notes which the client may see'
+    private_notes:
+      description: 'Privately visible notes associated with the quote, not disclosed to the client'
+      type: string
+      example: 'These are private notes, not to be disclosed to the client'
+    footer:
+      description: 'The footer text of the quote'
+      type: string
+      example: 'The text goes in the footer of the quote'
+    custom_value1:
+      description: 'First custom value field for additional information'
+      type: string
+      example: 'Priority: High'
+    custom_value2:
+      description: 'Second custom value field for additional information'
+      type: string
+      example: 'Department: Sales'
+    custom_value3:
+      description: 'Third custom value field for additional information'
+      type: string
+      example: 'Project: Website Redesign'
+    custom_value4:
+      description: 'Fourth custom value field for additional information'
+      type: string
+      example: 'Valid until: 2024-12-31'
+    tax_name1:
+      description: 'The name of the first tax applied to the quote'
+      type: string
+      example: 'GST'
+    tax_name2:
+      description: 'The name of the second tax applied to the quote'
+      type: string
+      example: 'VAT'
+    tax_rate1:
+      description: 'The rate of the first tax applied to the quote'
+      type: number
+      format: float
+      example: 10.00
+    tax_rate2:
+      description: 'The rate of the second tax applied to the quote'
+      type: number
+      format: float
+      example: 5.00
+    tax_name3:
+      description: 'The name of the third tax applied to the quote'
+      type: string
+      example: 'Local Tax'
+    tax_rate3:
+      description: 'The rate of the third tax applied to the quote'
+      type: number
+      format: float
+      example: 2.50
+    line_items:
+      type: array
+      description: 'An array of objects which define the line items of the quote'
+      items:
+        $ref: '#/components/schemas/InvoiceItem'
+    discount:
+      description: 'The discount amount or percentage applied to the quote'
+      type: number
+      format: float
+      example: 10.00
+    partial:
+      description: 'The partial or deposit amount for the quote'
+      type: number
+      format: float
+      example: 500.00
+    is_amount_discount:
+      description: 'Boolean flag indicating if the discount is a fixed amount or a percentage'
+      type: boolean
+      example: true
+    uses_inclusive_taxes:
+      description: 'Boolean flag indicating if the taxes used are inclusive or exclusive'
+      type: boolean
+      example: true
+    date:
+      description: 'The date the quote was created'
+      type: string
+      format: date
+      example: '2024-01-15'
+    due_date:
+      description: 'The due date for the total amount of the quote'
+      type: string
+      format: date
+      example: '2024-02-15'
+    partial_due_date:
+      description: 'The due date for the partial or deposit amount'
+      type: string
+      format: date
+      example: '2024-01-30'
+    custom_surcharge1:
+      description: 'First custom surcharge amount for the quote'
+      type: number
+      format: float
+      example: 25.00
+    custom_surcharge2:
+      description: 'Second custom surcharge amount for the quote'
+      type: number
+      format: float
+      example: 15.00
+    custom_surcharge3:
+      description: 'Third custom surcharge amount for the quote'
+      type: number
+      format: float
+      example: 10.00
+    custom_surcharge4:
+      description: 'Fourth custom surcharge amount for the quote'
+      type: number
+      format: float
+      example: 5.00
+    custom_surcharge_tax1:
+      description: 'Boolean flag indicating if taxes are charged on the first custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax2:
+      description: 'Boolean flag indicating if taxes are charged on the second custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax3:
+      description: 'Boolean flag indicating if taxes are charged on the third custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax4:
+      description: 'Boolean flag indicating if taxes are charged on the fourth custom surcharge amount'
+      type: boolean
+      example: false
+  type: object 
     Document:
       properties:
         id:
@@ -19406,6 +19694,106 @@ components:
           type: boolean
           example: 'true'
       type: object
+VendorRequest:
+  properties:
+    name:
+      description: 'The name of the vendor'
+      type: string
+      example: 'Harry cafe de wheels'
+    classification:
+      description: 'The classification of the vendor'
+      type: string
+      example: 'individual'
+    website:
+      description: 'The website of the vendor'
+      type: string
+      example: 'www.harry.com'
+    private_notes:
+      description: 'The private notes of the vendor. These notes are only visible to users with appropriate permissions.'
+      type: string
+      example: 'Shhh, do not tell the vendor'
+    industry_id:
+      description: 'The industry id of the vendor'
+      type: string
+      example: '1'
+    size_id:
+      description: 'The size id of the vendor'
+      type: string
+      example: '2'
+    address1:
+      description: 'The first line of the vendor''s address'
+      type: string
+      example: '123 Main St'
+    address2:
+      description: 'The second line of the vendor''s address'
+      type: string
+      example: 'Suite 5'
+    city:
+      description: 'The city of the vendor''s address'
+      type: string
+      example: 'New York'
+    state:
+      description: 'The state of the vendor''s address'
+      type: string
+      example: 'NY'
+    postal_code:
+      description: 'The postal code of the vendor''s address'
+      type: string
+      example: '10001'
+    phone:
+      description: 'The phone number of the vendor'
+      type: string
+      example: '555-3434-3434'
+    country_id:
+      description: 'The country id of the vendor'
+      type: string
+      example: '1'
+    currency_id:
+      description: 'The currency id of the vendor'
+      type: string
+      example: '4'
+    custom_value1:
+      description: 'The value of the first custom field for the vendor'
+      type: string
+      example: 'Custom field 1'
+    custom_value2:
+      description: 'The value of the second custom field for the vendor'
+      type: string
+      example: 'Custom field 2'
+    custom_value3:
+      description: 'The value of the third custom field for the vendor'
+      type: string
+      example: 'Custom field 3'
+    custom_value4:
+      description: 'The value of the fourth custom field for the vendor'
+      type: string
+      example: 'Custom field 4'
+    vat_number:
+      description: 'The VAT number of the vendor'
+      type: string
+      example: 'VAT123456'
+    id_number:
+      description: 'The ID number of the vendor'
+      type: string
+      example: 'ID123456'
+    number:
+      description: 'The number of the vendor'
+      type: string
+      example: 'VEN-001'
+    language_id:
+      description: 'The language id of the vendor'
+      type: string
+      example: '1'
+    assigned_user_id:
+      description: 'The hashed id of the assigned user to this vendor'
+      type: string
+      example: Opnel5aKBz
+    contacts:
+      type: array
+      items:
+        $ref: '#/components/schemas/VendorContact'
+      description: 'An array of contacts associated with the vendor'
+  type: object 
     Company:
       properties:
         id:
@@ -20105,6 +20493,158 @@ components:
           example: Opnel5aKBz
       type: object
       
+PurchaseOrderRequest:
+  properties:
+    vendor_id:
+      description: 'The unique hashed identifier for the vendor associated with the purchase order'
+      type: string
+      example: Opnel5aKBz
+    assigned_user_id:
+      description: 'The unique hashed identifier for the user assigned to the purchase order'
+      type: string
+      example: Opnel5aKBz
+    number:
+      description: 'The unique alpha-numeric purchase order number per company'
+      type: string
+      example: 'PO-001'
+    quote_number:
+      description: 'The quote number associated with this purchase order'
+      type: string
+      example: 'QUOTE-001'
+    terms:
+      description: 'The terms and conditions for the purchase order'
+      type: string
+      example: 'These are some purchase order terms. Valid for 14 days.'
+    public_notes:
+      description: 'Publicly visible notes associated with the purchase order'
+      type: string
+      example: 'These are public notes which the vendor may see'
+    private_notes:
+      description: 'Privately visible notes associated with the purchase order, not disclosed to the vendor'
+      type: string
+      example: 'These are private notes, not to be disclosed to the vendor'
+    footer:
+      description: 'The footer text of the purchase order'
+      type: string
+      example: 'The text goes in the footer of the purchase order'
+    custom_value1:
+      description: 'First custom value field for additional information'
+      type: string
+      example: 'Priority: High'
+    custom_value2:
+      description: 'Second custom value field for additional information'
+      type: string
+      example: 'Department: IT'
+    custom_value3:
+      description: 'Third custom value field for additional information'
+      type: string
+      example: 'Budget Code: IT-2024'
+    custom_value4:
+      description: 'Fourth custom value field for additional information'
+      type: string
+      example: 'Approved by: John Smith'
+    tax_name1:
+      description: 'The name of the first tax applied to the purchase order'
+      type: string
+      example: 'GST'
+    tax_name2:
+      description: 'The name of the second tax applied to the purchase order'
+      type: string
+      example: 'VAT'
+    tax_rate1:
+      description: 'The rate of the first tax applied to the purchase order'
+      type: number
+      format: float
+      example: 10.00
+    tax_rate2:
+      description: 'The rate of the second tax applied to the purchase order'
+      type: number
+      format: float
+      example: 5.00
+    tax_name3:
+      description: 'The name of the third tax applied to the purchase order'
+      type: string
+      example: 'Local Tax'
+    tax_rate3:
+      description: 'The rate of the third tax applied to the purchase order'
+      type: number
+      format: float
+      example: 2.50
+    line_items:
+      type: array
+      description: 'An array of objects which define the line items of the purchase order'
+      items:
+        $ref: '#/components/schemas/InvoiceItem'
+    discount:
+      description: 'The discount amount or percentage applied to the purchase order'
+      type: number
+      format: float
+      example: 5.00
+    partial:
+      description: 'The partial or deposit amount for the purchase order'
+      type: number
+      format: float
+      example: 500.00
+    is_amount_discount:
+      description: 'Boolean flag indicating if the discount is a fixed amount or a percentage'
+      type: boolean
+      example: true
+    uses_inclusive_taxes:
+      description: 'Boolean flag indicating if the taxes used are inclusive or exclusive'
+      type: boolean
+      example: true
+    date:
+      description: 'The date the purchase order was created'
+      type: string
+      format: date
+      example: '2024-01-15'
+    due_date:
+      description: 'The due date for the total amount of the purchase order'
+      type: string
+      format: date
+      example: '2024-02-15'
+    partial_due_date:
+      description: 'The due date for the partial or deposit amount'
+      type: string
+      format: date
+      example: '2024-01-30'
+    custom_surcharge1:
+      description: 'First custom surcharge amount for the purchase order'
+      type: number
+      format: float
+      example: 25.00
+    custom_surcharge2:
+      description: 'Second custom surcharge amount for the purchase order'
+      type: number
+      format: float
+      example: 15.00
+    custom_surcharge3:
+      description: 'Third custom surcharge amount for the purchase order'
+      type: number
+      format: float
+      example: 10.00
+    custom_surcharge4:
+      description: 'Fourth custom surcharge amount for the purchase order'
+      type: number
+      format: float
+      example: 5.00
+    custom_surcharge_tax1:
+      description: 'Boolean flag indicating if taxes are charged on the first custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax2:
+      description: 'Boolean flag indicating if taxes are charged on the second custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax3:
+      description: 'Boolean flag indicating if taxes are charged on the third custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax4:
+      description: 'Boolean flag indicating if taxes are charged on the fourth custom surcharge amount'
+      type: boolean
+      example: false
+  type: object 
     Payment:
       properties:
         id:
@@ -23645,6 +24185,68 @@ components:
           type: integer
           example: '1'
       type: object
+ProjectRequest:
+  properties:
+    name:
+      type: string
+      description: 'The name of the project'
+      example: 'New Website Development'
+    client_id:
+      type: string
+      example: Opnel5aKBz
+      description: 'The client identifier associated with the project'
+    assigned_user_id:
+      description: 'The assigned user identifier associated with the project'
+      type: string
+      example: Opnel5aKBz
+    task_rate:
+      type: number
+      format: float
+      example: 10.50
+      description: 'The default rate per task for the project'
+    due_date:
+      type: string
+      format: date
+      example: '2024-12-31'
+      description: 'The due date for the project'
+    private_notes:
+      type: string
+      description: 'Private notes associated with the project'
+      example: 'This is a complex project requiring special attention'
+    public_notes:
+      type: string
+      description: 'Public notes associated with the project'
+      example: 'Website development with modern features'
+    budgeted_hours:
+      type: number
+      format: float
+      description: 'The number of budgeted hours for the project'
+      example: 120.5
+    custom_value1:
+      type: string
+      description: 'Custom value field 1'
+      example: 'High Priority'
+    custom_value2:
+      type: string
+      description: 'Custom value field 2'
+      example: 'Frontend Team'
+    custom_value3:
+      type: string
+      description: 'Custom value field 3'
+      example: 'Q4 2024'
+    custom_value4:
+      type: string
+      description: 'Custom value field 4'
+      example: 'Phase 1'
+    number:
+      type: string
+      description: 'The project number'
+      example: 'PRJ-001'
+    color:
+      type: string
+      description: 'The color associated with the project'
+      example: '#FF5722'
+  type: object 
 
     ProductBulkAction:
       required:
@@ -23937,6 +24539,162 @@ components:
         vendor_contact:
           $ref: '#/components/schemas/VendorContact'
       type: object
+CreditRequest:
+  properties:
+    client_id:
+      description: 'The unique hashed ID of the client associated with the credit'
+      type: string
+      example: Opnel5aKBz
+    assigned_user_id:
+      description: 'The unique hashed ID of the assigned user responsible for the credit'
+      type: string
+      example: Opnel5aKBz
+    invoice_id:
+      description: 'The unique hashed ID of the linked invoice to which the credit is applied'
+      type: string
+      example: Opnel5aKBz
+    number:
+      description: 'The unique alphanumeric credit number per company'
+      type: string
+      example: 'CR-001'
+    po_number:
+      description: 'The purchase order number referred to by the credit'
+      type: string
+      example: 'PO-12345'
+    terms:
+      description: 'The terms associated with the credit'
+      type: string
+      example: 'Net 30'
+    public_notes:
+      description: 'Public notes for the credit'
+      type: string
+      example: 'Thank you for your business.'
+    private_notes:
+      description: 'Private notes for internal use, not visible to the client'
+      type: string
+      example: 'Client is requesting a discount.'
+    footer:
+      description: 'The footer text for the credit'
+      type: string
+      example: 'Footer text goes here.'
+    custom_value1:
+      description: 'Custom value 1 for additional credit information'
+      type: string
+      example: 'Custom data 1'
+    custom_value2:
+      description: 'Custom value 2 for additional credit information'
+      type: string
+      example: 'Custom data 2'
+    custom_value3:
+      description: 'Custom value 3 for additional credit information'
+      type: string
+      example: 'Custom data 3'
+    custom_value4:
+      description: 'Custom value 4 for additional credit information'
+      type: string
+      example: 'Custom data 4'
+    tax_name1:
+      description: 'The name of the first tax applied to the credit'
+      type: string
+      example: 'VAT'
+    tax_name2:
+      description: 'The name of the second tax applied to the credit'
+      type: string
+      example: 'GST'
+    tax_rate1:
+      description: 'The rate of the first tax applied to the credit'
+      type: number
+      format: float
+      example: 10.00
+    tax_rate2:
+      description: 'The rate of the second tax applied to the credit'
+      type: number
+      format: float
+      example: 5.00
+    tax_name3:
+      description: 'The name of the third tax applied to the credit'
+      type: string
+      example: 'PST'
+    tax_rate3:
+      description: 'The rate of the third tax applied to the credit'
+      type: number
+      format: float
+      example: 8.00
+    line_items:
+      type: array
+      description: 'An array of objects which define the line items of the credit'
+      items:
+        $ref: '#/components/schemas/InvoiceItem'
+    discount:
+      description: 'The discount applied to the credit'
+      type: number
+      format: float
+      example: 10.00
+    partial:
+      description: 'The partial amount applied to the credit'
+      type: number
+      format: float
+      example: 20.00
+    is_amount_discount:
+      description: 'Indicates whether the discount applied is a fixed amount or a percentage'
+      type: boolean
+      example: true
+    uses_inclusive_taxes:
+      description: 'Indicates whether the tax rates applied to the credit are inclusive or exclusive'
+      type: boolean
+      example: true
+    date:
+      description: 'The date the credit was issued'
+      type: string
+      format: date
+      example: '2024-01-15'
+    due_date:
+      description: 'The due date for the total amount of the credit'
+      type: string
+      format: date
+      example: '2024-02-15'
+    partial_due_date:
+      description: 'The due date for the partial amount of the credit'
+      type: string
+      format: date
+      example: '2024-01-30'
+    custom_surcharge1:
+      description: 'First custom surcharge amount'
+      type: number
+      format: float
+      example: 10.00
+    custom_surcharge2:
+      description: 'Second custom surcharge amount'
+      type: number
+      format: float
+      example: 15.00
+    custom_surcharge3:
+      description: 'Third custom surcharge amount'
+      type: number
+      format: float
+      example: 5.00
+    custom_surcharge4:
+      description: 'Fourth custom surcharge amount'
+      type: number
+      format: float
+      example: 8.00
+    custom_surcharge_tax1:
+      description: 'Boolean flag indicating if taxes are charged on the first custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax2:
+      description: 'Boolean flag indicating if taxes are charged on the second custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax3:
+      description: 'Boolean flag indicating if taxes are charged on the third custom surcharge amount'
+      type: boolean
+      example: false
+    custom_surcharge_tax4:
+      description: 'Boolean flag indicating if taxes are charged on the fourth custom surcharge amount'
+      type: boolean
+      example: false
+  type: object 
     User:
       properties:
         id:
