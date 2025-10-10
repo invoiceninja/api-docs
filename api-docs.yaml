@@ -8644,6 +8644,9 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
       responses:
         200:
           description: "A list of credits"
@@ -9134,6 +9137,8 @@ paths:
         - $ref: '#/components/parameters/X-API-TOKEN'
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/per_page_meta'
+        - $ref: '#/components/parameters/page_meta'
         - name: name
           in: query
           description: |
@@ -9626,6 +9631,9 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
         - $ref: "#/components/parameters/client_id"
         - $ref: "#/components/parameters/created_at"
         - $ref: "#/components/parameters/updated_at"
@@ -10306,6 +10314,8 @@ paths:
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
         - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
       responses:
         200:
           description: "A list of tasks"
@@ -10859,8 +10869,12 @@ paths:
             --header 'Accept: application/json'
       operationId: getQuotes
       parameters:
+        - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
         - $ref: "#/components/parameters/status"
         - $ref: "#/components/parameters/client_id"
         - $ref: "#/components/parameters/created_at"
@@ -11708,6 +11722,9 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
         - $ref: "#/components/parameters/status"
         - $ref: "#/components/parameters/client_id"
         - $ref: "#/components/parameters/created_at"
@@ -12730,6 +12747,8 @@ paths:
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
         - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
       responses:
         200:
           description: "A list of projects"
@@ -13202,6 +13221,8 @@ paths:
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
         - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
       responses:
         200:
           description: "A list of vendors"
@@ -13699,6 +13720,9 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
         - $ref: "#/components/parameters/status"
         - $ref: "#/components/parameters/client_id"
         - $ref: "#/components/parameters/created_at"
@@ -14323,6 +14347,8 @@ paths:
         - $ref: '#/components/parameters/X-Requested-With'
         - $ref: '#/components/parameters/client_include'
         - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/per_page_meta'
+        - $ref: '#/components/parameters/page_meta'
         - $ref: "#/components/parameters/status"
         - $ref: "#/components/parameters/created_at"
         - $ref: "#/components/parameters/updated_at"
@@ -15445,6 +15471,9 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
       responses:
         200:
           description: "A list of purchase orders"
@@ -16053,6 +16082,9 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+        - $ref: "#/components/parameters/index"
+        - $ref: "#/components/parameters/per_page_meta"
+        - $ref: "#/components/parameters/page_meta"
         - $ref: "#/components/parameters/status"
         - $ref: "#/components/parameters/client_id"
         - $ref: "#/components/parameters/created_at"
