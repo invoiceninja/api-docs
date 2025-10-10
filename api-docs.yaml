@@ -9742,6 +9742,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Recurring invoice object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecurringInvoiceRequest'
       x-codeSamples:
       - lang: php
         label: php
@@ -9819,12 +9826,6 @@ paths:
                 }
               ]
             }'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RecurringInvoiceRequest"
       responses:
         200:
           description: "Returns the saved RecurringInvoice object"
@@ -10349,6 +10350,44 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Task object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          
+          $task = $ninja->tasks->create([
+              'description' => 'Complete project documentation',
+              'client_id' => 'D2J234DFA',
+              'project_id' => 'P2J234DFA',
+              'time_log' => '2.5',
+              'status_id' => 1,
+              'due_date' => '2024-01-31',
+              'priority' => 1
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X POST https://demo.invoiceninja.com/api/v1/tasks \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "description": "Complete project documentation",
+              "client_id": "D2J234DFA",
+              "project_id": "P2J234DFA",
+              "time_log": "2.5",
+              "status_id": 1,
+              "due_date": "2024-01-31",
+              "priority": 1
+            }'
       responses:
         200:
           description: "Returns the saved task object"
@@ -10438,6 +10477,37 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Task object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $task = $ninja->tasks->update("D2J234DFA", [
+              'description' => 'Updated task description',
+              'time_log' => '3.5',
+              'status_id' => 2,
+              'due_date' => '2024-02-15'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X PUT https://demo.invoiceninja.com/api/v1/tasks/D2J234DFA \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "description": "Updated task description",
+              "time_log": "3.5",
+              "status_id": 2,
+              "due_date": "2024-02-15"
+            }'
       responses:
         200:
           description: "Returns the task object"
@@ -10707,6 +10777,35 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Task sort order data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskSortRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $ninja->tasks->sort([
+              'task_ids' => ['D2J234DFA', 'E3K345EFB', 'F4L456FGC'],
+              'status_id' => 1,
+              'sort_order' => ['F4L456FGC', 'D2J234DFA', 'E3K345EFB']
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X POST https://demo.invoiceninja.com/api/v1/tasks/sort \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "task_ids": ["D2J234DFA", "E3K345EFB", "F4L456FGC"],
+              "status_id": 1,
+              "sort_order": ["F4L456FGC", "D2J234DFA", "E3K345EFB"]
+            }'
       responses:
         200:
           description: "Returns an Ok, 200 HTTP status"
@@ -10952,6 +11051,13 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Quote object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
       responses:
         200:
           description: "Returns the saved Quote object"
@@ -11112,6 +11218,13 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Quote object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuoteRequest'
       responses:
         200:
           description: "Returns the Quote object"
@@ -12661,6 +12774,44 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Project object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          
+          $project = $ninja->projects->create([
+              'name' => 'Website Redesign Project',
+              'client_id' => 'D2J234DFA',
+              'description' => 'Complete redesign of company website',
+              'budgeted_hours' => 120.5,
+              'task_rate' => 75.00,
+              'due_date' => '2024-03-31',
+              'color' => '#FF5733'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X POST https://demo.invoiceninja.com/api/v1/projects \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "name": "Website Redesign Project",
+              "client_id": "D2J234DFA",
+              "description": "Complete redesign of company website",
+              "budgeted_hours": 120.5,
+              "task_rate": 75.00,
+              "due_date": "2024-03-31",
+              "color": "#FF5733"
+            }'
       responses:
         200:
           description: "Returns the saved project object"
@@ -12750,6 +12901,37 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Project object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $project = $ninja->projects->update("D2J234DFA", [
+              'name' => 'Updated Project Name',
+              'description' => 'Updated project description',
+              'budgeted_hours' => 150.0,
+              'due_date' => '2024-04-30'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X PUT https://demo.invoiceninja.com/api/v1/projects/D2J234DFA \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "name": "Updated Project Name",
+              "description": "Updated project description",
+              "budgeted_hours": 150.0,
+              "due_date": "2024-04-30"
+            }'
       responses:
         200:
           description: "Returns the project object"
@@ -13064,9 +13246,71 @@ paths:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Vendor object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          
+          $vendor = $ninja->vendors->create([
+              'name' => 'ABC Supply Company',
+              'address1' => '123 Main Street',
+              'address2' => 'Suite 100',
+              'city' => 'New York',
+              'state' => 'NY',
+              'postal_code' => '10001',
+              'country_id' => '1',
+              'phone' => '+1-555-123-4567',
+              'email' => 'contact@abcsupply.com',
+              'website' => 'https://www.abcsupply.com',
+              'contacts' => [
+                  [
+                      'first_name' => 'John',
+                      'last_name' => 'Doe',
+                      'email' => 'john.doe@abcsupply.com',
+                      'phone' => '+1-555-123-4567',
+                      'send_email' => true
+                  ]
+              ]
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X POST https://demo.invoiceninja.com/api/v1/vendors \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "name": "ABC Supply Company",
+              "address1": "123 Main Street",
+              "address2": "Suite 100",
+              "city": "New York",
+              "state": "NY",
+              "postal_code": "10001",
+              "country_id": "1",
+              "phone": "+1-555-123-4567",
+              "email": "contact@abcsupply.com",
+              "website": "https://www.abcsupply.com",
+              "contacts": [
+                {
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "john.doe@abcsupply.com",
+                  "phone": "+1-555-123-4567",
+                  "send_email": true
+                }
+              ]
+            }'
       responses:
         200:
-          description: "Returns the saved clivendorent object"
+          description: "Returns the saved vendor object"
           headers:
             X-MINIMUM-CLIENT-VERSION:
               $ref: "#/components/headers/X-MINIMUM-CLIENT-VERSION"
@@ -13153,6 +13397,39 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Vendor object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VendorRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $vendor = $ninja->vendors->update("D2J234DFA", [
+              'name' => 'Updated Vendor Name',
+              'address1' => '456 New Street',
+              'city' => 'Los Angeles',
+              'state' => 'CA',
+              'postal_code' => '90210'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X PUT https://demo.invoiceninja.com/api/v1/vendors/D2J234DFA \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "name": "Updated Vendor Name",
+              "address1": "456 New Street",
+              "city": "Los Angeles",
+              "state": "CA",
+              "postal_code": "90210"
+            }'
       responses:
         200:
           description: "Returns the vendor object"
@@ -14203,8 +14480,16 @@ paths:
               $ref: '#/components/headers/X-RateLimit-Limit'
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/Client'
+              schema:  
+                type: object
+                properties:
+                  data: 
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Client'
+                  meta:
+                    type: object
+                    $ref: '#/components/schemas/Meta'
         401:
           $ref: '#/components/responses/401'
         403:
@@ -15198,12 +15483,70 @@ paths:
       tags:
         - Purchase Orders
       summary: "Create purchase order"
-      description: "Adds an purchase order to the system"
+      description: "Adds a purchase order to the system"
       operationId: storePurchaseOrder
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
         - $ref: "#/components/parameters/X-Requested-With"
         - $ref: "#/components/parameters/include"
+      requestBody:
+        description: Purchase order object that needs to be added to the company
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          
+          $purchaseOrder = $ninja->purchase_orders->create([
+              'vendor_id' => 'D2J234DFA',
+              'date' => '2024-01-01',
+              'due_date' => '2024-01-31',
+              'private_notes' => 'Internal notes about this purchase order',
+              'public_notes' => 'Please deliver to our warehouse',
+              'line_items' => [
+                  [
+                      'quantity' => 10,
+                      'cost' => 25.00,
+                      'product_key' => 'PROD_001',
+                      'notes' => 'Office supplies',
+                      'discount' => 0,
+                      'is_amount_discount' => true,
+                      'tax_name1' => 'Sales Tax',
+                      'tax_rate1' => 8.5
+                  ]
+              ]
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X POST https://demo.invoiceninja.com/api/v1/purchase_orders \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "vendor_id": "D2J234DFA",
+              "date": "2024-01-01",
+              "due_date": "2024-01-31",
+              "private_notes": "Internal notes about this purchase order",
+              "public_notes": "Please deliver to our warehouse",
+              "line_items": [
+                {
+                  "quantity": 10,
+                  "cost": 25.00,
+                  "product_key": "PROD_001",
+                  "notes": "Office supplies",
+                  "discount": 0,
+                  "is_amount_discount": true,
+                  "tax_name1": "Sales Tax",
+                  "tax_rate1": 8.5
+                }
+              ]
+            }'
       responses:
         200:
           description: "Returns the saved purchase order object"
@@ -15281,7 +15624,7 @@ paths:
       tags:
         - Purchase Orders
       summary: "Update purchase order"
-      description: "Handles the updating of an purchase order by id"
+      description: "Handles the updating of a purchase order by id"
       operationId: updatePurchaseOrder
       parameters:
         - $ref: "#/components/parameters/X-API-TOKEN"
@@ -15295,6 +15638,37 @@ paths:
             type: string
             format: string
           example: D2J234DFA
+      requestBody:
+        description: Purchase order object that needs to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PurchaseOrderRequest'
+      x-codeSamples:
+      - lang: php
+        label: php
+        source: |
+          $ninja = new InvoiceNinja("YOUR-TOKEN");
+          $purchaseOrder = $ninja->purchase_orders->update("D2J234DFA", [
+              'date' => '2024-02-01',
+              'due_date' => '2024-02-28',
+              'private_notes' => 'Updated internal notes',
+              'public_notes' => 'Updated delivery instructions'
+          ]);
+      - lang: curl
+        label: curl
+        source: |
+          curl -X PUT https://demo.invoiceninja.com/api/v1/purchase_order/D2J234DFA \
+            -H "X-API-TOKEN: YOUR-TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "X-Requested-With: XMLHttpRequest" \
+            -d '{
+              "date": "2024-02-01",
+              "due_date": "2024-02-28",
+              "private_notes": "Updated internal notes",
+              "public_notes": "Updated delivery instructions"
+            }'
       responses:
         200:
           description: "Returns the purchase order object"
@@ -17736,6 +18110,64 @@ components:
           type: object
           description: 'The pagination links'
           readOnly: true
+    TaskRequest:
+      required:
+        - description
+      properties:
+        description:
+          description: 'Task description'
+          type: string
+          example: 'Complete project documentation'
+        client_id:
+          description: 'The hashed ID of the client'
+          type: string
+          example: 'D2J234DFA'
+        project_id:
+          description: 'The hashed ID of the project'
+          type: string
+          example: 'P2J234DFA'
+        time_log:
+          description: 'Time logged for the task'
+          type: string
+          example: '2.5'
+        status_id:
+          description: 'Status ID of the task'
+          type: integer
+          example: 1
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          example: 'Custom value 1'
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          example: 'Custom value 2'
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          example: 'Custom value 3'
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          example: 'Custom value 4'
+        is_deleted:
+          description: 'Whether the task is deleted'
+          type: boolean
+          example: false
+        archived_at:
+          description: 'Timestamp when task was archived'
+          type: integer
+          example: 1640995200
+        due_date:
+          description: 'Due date for the task'
+          type: string
+          format: date
+          example: '2024-01-31'
+        priority:
+          description: 'Priority level of the task'
+          type: integer
+          example: 1
+      type: object
     LocationRequest:
       properties:
         name:
@@ -17799,6 +18231,115 @@ components:
           type: string
           example: Opnel5aKBz
       type: object 
+    QuoteRequest:
+      required:
+        - client_id
+        - date
+        - due_date
+      properties:
+        client_id:
+          description: 'The hashed ID of the client'
+          type: string
+          example: 'D2J234DFA'
+        date:
+          description: 'Quote date'
+          type: string
+          format: date
+          example: '2024-01-01'
+        due_date:
+          description: 'Due date for the quote'
+          type: string
+          format: date
+          example: '2024-01-31'
+        private_notes:
+          description: 'Private notes for the quote'
+          type: string
+          example: 'Internal notes about this quote'
+        public_notes:
+          description: 'Public notes for the quote'
+          type: string
+          example: 'Thank you for your business!'
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          example: 'Custom value 1'
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          example: 'Custom value 2'
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          example: 'Custom value 3'
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          example: 'Custom value 4'
+        line_items:
+          type: array
+          description: 'Array of line items for the quote'
+          items:
+            type: object
+            properties:
+              quantity:
+                type: number
+                example: 1
+              cost:
+                type: number
+                example: 14.00
+              product_key:
+                type: string
+                example: 'sku_4_u'
+              notes:
+                type: string
+                example: 'The actual product description'
+              discount:
+                type: number
+                example: 0
+              is_amount_discount:
+                type: boolean
+                example: true
+              tax_name1:
+                type: string
+                example: ''
+              tax_rate1:
+                type: number
+                example: 0
+              tax_name2:
+                type: string
+                example: ''
+              tax_rate2:
+                type: number
+                example: 0
+              tax_name3:
+                type: string
+                example: ''
+              tax_rate3:
+                type: number
+                example: 0
+              sort_id:
+                type: string
+                example: '0'
+              custom_value1:
+                type: string
+                example: 'https://picsum.photos/200'
+              custom_value2:
+                type: string
+                example: '94'
+              custom_value3:
+                type: string
+                example: 'Alias vel eveniet.'
+              custom_value4:
+                type: string
+                example: 'Iusto aut quis qui.'
+              type_id:
+                type: string
+                example: '1'
+              tax_id:
+                type: string
+                example: '1'
+      type: object
+
     Document:
       properties:
         id:
@@ -18445,6 +18986,10 @@ components:
           description: 'The client hashed id'
           type: string
           example: 'Ht5N9cX3jK'
+        location_id:
+          description: 'The location id of the client this request related to'
+          type: string
+          example: Opnel5aKBz
         number:
           description: 'The invoice number - is a unique alpha numeric number per invoice per company'
           type: string
@@ -19264,6 +19809,99 @@ components:
           type: boolean
           example: 'true'
       type: object
+    VendorRequest:
+      required:
+        - name
+      properties:
+        name:
+          description: 'Vendor name'
+          type: string
+          example: 'ABC Supply Company'
+        address1:
+          description: 'Primary address line'
+          type: string
+          example: '123 Main Street'
+        address2:
+          description: 'Secondary address line'
+          type: string
+          example: 'Suite 100'
+        city:
+          description: 'City'
+          type: string
+          example: 'New York'
+        state:
+          description: 'State or province'
+          type: string
+          example: 'NY'
+        postal_code:
+          description: 'Postal code'
+          type: string
+          example: '10001'
+        country_id:
+          description: 'Country ID'
+          type: string
+          example: '1'
+        phone:
+          description: 'Phone number'
+          type: string
+          example: '+1-555-123-4567'
+        email:
+          description: 'Email address'
+          type: string
+          format: email
+          example: 'contact@abcsupply.com'
+        website:
+          description: 'Website URL'
+          type: string
+          format: uri
+          example: 'https://www.abcsupply.com'
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          example: 'Custom value 1'
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          example: 'Custom value 2'
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          example: 'Custom value 3'
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          example: 'Custom value 4'
+        is_deleted:
+          description: 'Whether the vendor is deleted'
+          type: boolean
+          example: false
+        archived_at:
+          description: 'Timestamp when vendor was archived'
+          type: integer
+          example: 1640995200
+        contacts:
+          type: array
+          description: 'Array of vendor contacts'
+          items:
+            type: object
+            properties:
+              first_name:
+                type: string
+                example: 'John'
+              last_name:
+                type: string
+                example: 'Doe'
+              email:
+                type: string
+                format: email
+                example: 'john.doe@abcsupply.com'
+              phone:
+                type: string
+                example: '+1-555-123-4567'
+              send_email:
+                type: boolean
+                example: true
+      type: object
     Company:
       properties:
         id:
@@ -19963,6 +20601,114 @@ components:
           example: Opnel5aKBz
       type: object
       
+    PurchaseOrderRequest:
+      required:
+        - vendor_id
+        - date
+        - due_date
+      properties:
+        vendor_id:
+          description: 'The hashed ID of the vendor'
+          type: string
+          example: 'D2J234DFA'
+        date:
+          description: 'Purchase order date'
+          type: string
+          format: date
+          example: '2024-01-01'
+        due_date:
+          description: 'Due date for the purchase order'
+          type: string
+          format: date
+          example: '2024-01-31'
+        private_notes:
+          description: 'Private notes for the purchase order'
+          type: string
+          example: 'Internal notes about this purchase order'
+        public_notes:
+          description: 'Public notes for the purchase order'
+          type: string
+          example: 'Please deliver to our warehouse'
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          example: 'Custom value 1'
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          example: 'Custom value 2'
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          example: 'Custom value 3'
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          example: 'Custom value 4'
+        line_items:
+          type: array
+          description: 'Array of line items for the purchase order'
+          items:
+            type: object
+            properties:
+              quantity:
+                type: number
+                example: 10
+              cost:
+                type: number
+                example: 25.00
+              product_key:
+                type: string
+                example: 'PROD_001'
+              notes:
+                type: string
+                example: 'Office supplies'
+              discount:
+                type: number
+                example: 0
+              is_amount_discount:
+                type: boolean
+                example: true
+              tax_name1:
+                type: string
+                example: 'Sales Tax'
+              tax_rate1:
+                type: number
+                example: 8.5
+              tax_name2:
+                type: string
+                example: ''
+              tax_rate2:
+                type: number
+                example: 0
+              tax_name3:
+                type: string
+                example: ''
+              tax_rate3:
+                type: number
+                example: 0
+              sort_id:
+                type: string
+                example: '0'
+              custom_value1:
+                type: string
+                example: 'Department: IT'
+              custom_value2:
+                type: string
+                example: 'Priority: High'
+              custom_value3:
+                type: string
+                example: 'Approved by Manager'
+              custom_value4:
+                type: string
+                example: 'Budget Code: IT-2024'
+              type_id:
+                type: string
+                example: '1'
+              tax_id:
+                type: string
+                example: '1'
+      type: object
     Payment:
       properties:
         id:
@@ -22846,173 +23592,122 @@ components:
           readOnly: true
 
     RecurringInvoiceRequest:
+      required:
+        - client_id
+        - date
+        - due_date
+        - frequency_id
       properties:
-        user_id:
-          description: 'The user hashed id'
-          type: string
-          example: Opnel5aKBz
-        assigned_user_id:
-          description: 'The assigned user hashed id'
-          type: string
-          example: Opnel5aKBz
         client_id:
-          description: 'The client hashed id'
+          description: 'The hashed ID of the client'
           type: string
-          example: Opnel5aKBz
-        frequency_id:
-          description: 'The recurring invoice frequency'
-          type: number
-          example: '4'
-        remaining_cycles:
-          description: 'The number of invoices left to be generated'
-          type: number
-          example: '4'
-        number:
-          description: 'The recurringinvoice number - is a unique alpha numeric number per invoice per company'
-          type: string
-          example: INV_101
-        po_number:
-          description: 'The purchase order associated with this recurring invoice'
-          type: string
-          example: PO-1234
-        terms:
-          description: 'The invoice terms'
-          type: string
-          example: 'These are invoice terms'
-        public_notes:
-          description: 'The public notes of the invoice'
-          type: string
-          example: 'These are some public notes'
-        private_notes:
-          description: 'The private notes of the invoice'
-          type: string
-          example: 'These are some private notes'
-        footer:
-          description: 'The invoice footer notes'
-          type: string
-          example: ''
-        custom_value1:
-          description: 'A custom field value'
-          type: string
-          example: '2022-10-01'
-        custom_value2:
-          description: 'A custom field value'
-          type: string
-          example: 'Something custom'
-        custom_value3:
-          description: 'A custom field value'
-          type: string
-          example: ''
-        custom_value4:
-          description: 'A custom field value'
-          type: string
-          example: ''
-        tax_name1:
-          description: 'The tax name'
-          type: string
-          example: ''
-        tax_name2:
-          description: 'The tax name'
-          type: string
-          example: ''
-        tax_rate1:
-          description: 'The tax rate'
-          type: number
-          format: float
-          example: '10.00'
-        tax_rate2:
-          description: 'The tax rate'
-          type: number
-          format: float
-          example: '10.00'
-        tax_name3:
-          description: 'The tax name'
-          type: string
-          example: ''
-        tax_rate3:
-          description: 'The tax rate'
-          type: number
-          format: float
-          example: '10.00'
-        line_items:
-          description: 'An array of objects which define the line items of the invoice'
-          type: object
-          example: ''
-        discount:
-          description: 'The invoice discount, can be an amount or a percentage'
-          type: number
-          format: float
-          example: '10.00'
-        partial:
-          description: 'The deposit/partial amount'
-          type: number
-          format: float
-          example: '10.00'
-        is_amount_discount:
-          description: 'Flag determining if the discount is an amount or a percentage'
-          type: boolean
-          example: true
-        uses_inclusive_taxes:
-          description: 'Defines the type of taxes used as either inclusive or exclusive'
-          type: boolean
-          example: true
+          example: 'D2J234DFA'
         date:
-          description: 'The Invoice Date'
+          description: 'Recurring invoice date'
           type: string
           format: date
-          example: '1994-07-30'
-        partial_due_date:
-          description: 'The due date for the deposit/partial amount'
-          type: string
-          format: date
-          example: '1994-07-30'
+          example: '2024-01-01'
         due_date:
-          description: 'The due date of the invoice'
+          description: 'Due date for the recurring invoice'
           type: string
           format: date
-          example: '1994-07-30'
-        custom_surcharge1:
-          description: 'First Custom Surcharge'
-          type: number
-          format: float
-          example: '10.00'
-        custom_surcharge2:
-          description: 'Second Custom Surcharge'
-          type: number
-          format: float
-          example: '10.00'
-        custom_surcharge3:
-          description: 'Third Custom Surcharge'
-          type: number
-          format: float
-          example: '10.00'
-        custom_surcharge4:
-          description: 'Fourth Custom Surcharge'
-          type: number
-          format: float
-          example: '10.00'
-        custom_surcharge_tax1:
-          description: 'Toggles charging taxes on custom surcharge amounts'
-          type: boolean
-          example: true
-        custom_surcharge_tax2:
-          description: 'Toggles charging taxes on custom surcharge amounts'
-          type: boolean
-          example: true
-        custom_surcharge_tax3:
-          description: 'Toggles charging taxes on custom surcharge amounts'
-          type: boolean
-          example: true
-        custom_surcharge_tax4:
-          description: 'Toggles charging taxes on custom surcharge amounts'
-          type: boolean
-          example: true
-        location_id:
-          description: 'The client location id that this invoice relates to'
+          example: '2024-01-31'
+        frequency_id:
+          description: 'Frequency ID for recurring invoice'
           type: string
-          example: Opnel5aKBz
+          example: '1'
+        remaining_cycles:
+          description: 'Number of remaining cycles'
+          type: string
+          example: '5'
+        private_notes:
+          description: 'Private notes for the recurring invoice'
+          type: string
+          example: 'Internal notes about this recurring invoice'
+        public_notes:
+          description: 'Public notes for the recurring invoice'
+          type: string
+          example: 'Thank you for your business!'
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          example: 'Custom value 1'
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          example: 'Custom value 2'
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          example: 'Custom value 3'
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          example: 'Custom value 4'
+        line_items:
+          type: array
+          description: 'Array of line items for the recurring invoice'
+          items:
+            type: object
+            properties:
+              quantity:
+                type: number
+                example: 1
+              cost:
+                type: number
+                example: 14.00
+              product_key:
+                type: string
+                example: 'sku_4_u'
+              notes:
+                type: string
+                example: 'The actual product description'
+              discount:
+                type: number
+                example: 0
+              is_amount_discount:
+                type: boolean
+                example: true
+              tax_name1:
+                type: string
+                example: ''
+              tax_rate1:
+                type: number
+                example: 0
+              tax_name2:
+                type: string
+                example: ''
+              tax_rate2:
+                type: number
+                example: 0
+              tax_name3:
+                type: string
+                example: ''
+              tax_rate3:
+                type: number
+                example: 0
+              sort_id:
+                type: string
+                example: '0'
+              custom_value1:
+                type: string
+                example: 'https://picsum.photos/200'
+              custom_value2:
+                type: string
+                example: '94'
+              custom_value3:
+                type: string
+                example: 'Alias vel eveniet.'
+              custom_value4:
+                type: string
+                example: 'Iusto aut quis qui.'
+              type_id:
+                type: string
+                example: '1'
+              tax_id:
+                type: string
+                example: '1'
       type: object
-      
     Product:
       type: object
       properties:
@@ -23568,6 +24263,65 @@ components:
           description: 'The ID number of the bank account'
           type: integer
           example: '1'
+      type: object
+    ProjectRequest:
+      required:
+        - name
+        - client_id
+      properties:
+        name:
+          description: 'Project name'
+          type: string
+          example: 'Website Redesign Project'
+        client_id:
+          description: 'The hashed ID of the client'
+          type: string
+          example: 'D2J234DFA'
+        description:
+          description: 'Project description'
+          type: string
+          example: 'Complete redesign of company website'
+        budgeted_hours:
+          description: 'Budgeted hours for the project'
+          type: number
+          example: 120.5
+        task_rate:
+          description: 'Hourly rate for tasks in this project'
+          type: number
+          example: 75.00
+        due_date:
+          description: 'Due date for the project'
+          type: string
+          format: date
+          example: '2024-03-31'
+        custom_value1:
+          description: 'Custom field value 1'
+          type: string
+          example: 'Custom value 1'
+        custom_value2:
+          description: 'Custom field value 2'
+          type: string
+          example: 'Custom value 2'
+        custom_value3:
+          description: 'Custom field value 3'
+          type: string
+          example: 'Custom value 3'
+        custom_value4:
+          description: 'Custom field value 4'
+          type: string
+          example: 'Custom value 4'
+        is_deleted:
+          description: 'Whether the project is deleted'
+          type: boolean
+          example: false
+        archived_at:
+          description: 'Timestamp when project was archived'
+          type: integer
+          example: 1640995200
+        color:
+          description: 'Project color for UI display'
+          type: string
+          example: '#FF5733'
       type: object
     CreditInvitation:
       properties:
@@ -24676,6 +25430,27 @@ components:
           format: integer
           example: '134341234234'
           readOnly: true
+      type: object
+    TaskSortRequest:
+      required:
+        - task_ids
+      properties:
+        task_ids:
+          type: array
+          description: 'Array of task IDs to be sorted'
+          items:
+            type: string
+            example: 'D2J234DFA'
+        status_id:
+          description: 'Status ID to assign to sorted tasks'
+          type: integer
+          example: 1
+        sort_order:
+          type: array
+          description: 'Array of task IDs in the desired sort order'
+          items:
+            type: string
+            example: 'D2J234DFA'
       type: object
     Location:
       properties:
