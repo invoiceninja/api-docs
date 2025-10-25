@@ -18642,69 +18642,9 @@ components:
           example: 'Custom value 4'
         line_items:
           type: array
-          description: 'Array of line items for the quote'
+          description: 'An array of objects which define the line items of the quote'
           items:
-            type: object
-            properties:
-              quantity:
-                type: number
-                example: 1
-              cost:
-                type: number
-                example: 14.00
-              product_key:
-                type: string
-                example: 'sku_4_u'
-              notes:
-                type: string
-                example: 'The actual product description'
-              discount:
-                type: number
-                example: 0
-              is_amount_discount:
-                type: boolean
-                example: true
-              tax_name1:
-                type: string
-                example: ''
-              tax_rate1:
-                type: number
-                example: 0
-              tax_name2:
-                type: string
-                example: ''
-              tax_rate2:
-                type: number
-                example: 0
-              tax_name3:
-                type: string
-                example: ''
-              tax_rate3:
-                type: number
-                example: 0
-              sort_id:
-                type: string
-                example: '0'
-              custom_value1:
-                type: string
-                example: 'https://picsum.photos/200'
-              custom_value2:
-                type: string
-                example: '94'
-              custom_value3:
-                type: string
-                example: 'Alias vel eveniet.'
-              custom_value4:
-                type: string
-                example: 'Iusto aut quis qui.'
-              type_id:
-                type: string
-                example: '1'
-              tax_id:
-                type: string
-                example: '1'
-      type: object
-
+            $ref: '#/components/schemas/InvoiceItem'
     Document:
       properties:
         id:
@@ -24011,68 +23951,9 @@ components:
           example: 'Custom value 4'
         line_items:
           type: array
-          description: 'Array of line items for the recurring invoice'
+          description: 'An array of objects which define the line items of the invoice'
           items:
-            type: object
-            properties:
-              quantity:
-                type: number
-                example: 1
-              cost:
-                type: number
-                example: 14.00
-              product_key:
-                type: string
-                example: 'sku_4_u'
-              notes:
-                type: string
-                example: 'The actual product description'
-              discount:
-                type: number
-                example: 0
-              is_amount_discount:
-                type: boolean
-                example: true
-              tax_name1:
-                type: string
-                example: ''
-              tax_rate1:
-                type: number
-                example: 0
-              tax_name2:
-                type: string
-                example: ''
-              tax_rate2:
-                type: number
-                example: 0
-              tax_name3:
-                type: string
-                example: ''
-              tax_rate3:
-                type: number
-                example: 0
-              sort_id:
-                type: string
-                example: '0'
-              custom_value1:
-                type: string
-                example: 'https://picsum.photos/200'
-              custom_value2:
-                type: string
-                example: '94'
-              custom_value3:
-                type: string
-                example: 'Alias vel eveniet.'
-              custom_value4:
-                type: string
-                example: 'Iusto aut quis qui.'
-              type_id:
-                type: string
-                example: '1'
-              tax_id:
-                type: string
-                example: '1'
-      type: object
+            $ref: '#/components/schemas/InvoiceItem'
     Product:
       type: object
       properties:
