@@ -15369,7 +15369,7 @@ paths:
             --header 'X-API-TOKEN: YOUR_API_TOKEN_HERE' \
             --header 'Accept: application/json'
       description: |
-            ##  GET /api/v1/clients  
+            ###  GET /api/v1/clients  
             When retrieving a list of clients you can also chain query parameters in order to filter the dataset that is returned. For example, you can send a request to the following URL to retrieve clients that have a balance greater than 1000
               
             ```
@@ -27435,19 +27435,19 @@ tags:
       The Clients API provides endpoints for managing client records within your company. A client represents a customer 
       or business entity that you provide services or products to.
 
-      ## Key Features
+      ### Key Features
       - Create, read, update, and delete client records
       - Manage client contact information and billing details
       - View client-specific transaction history
       - Handle multiple contacts per client
       - Track client-specific settings and preferences
 
-      ## Client Statuses
+      ### Client Statuses
       - Active: Client is currently active and can be billed
       - Archived: Client is archived and hidden from active lists
       - Deleted: Client is marked for deletion but retained in the database
 
-      ## Best Practices
+      ### Best Practices
       - Always validate client email addresses
       - Use unique client numbers for easy reference
       - Keep contact information up to date
